@@ -1,0 +1,167 @@
+﻿@model HotelApp.Shared.Admin.Hotel.HotelCommon
+<link href="~/user/css/elegant-icons.css" rel="stylesheet" />
+<link href="~/user/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/user/css/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/user/css/nice-select.css" rel="stylesheet" />
+<link href="~/user/css/owl.carousel.min.css" rel="stylesheet" />
+<link href="~/user/css/slicknav.min.css" rel="stylesheet" />
+<link href="~/user/css/bootstrap.min2.css" rel="stylesheet" />
+<link href="~/user/css/style2.css" rel="stylesheet" />
+<div class="carousel-header">
+    <div id="carouselId" class="carousel slide" data-bs-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-bs-target="#carouselId" data-bs-slide-to="0"></li>
+            <li data-bs-target="#carouselId" data-bs-slide-to="1"></li>
+            <li data-bs-target="#carouselId" data-bs-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+            <div class="carousel-item active">
+                <img src="~/admin/assets/img/image/pexels-karolina-2031292-3669288.jpg" class="img-fluid" alt="Image">
+                <div class="carousel-caption">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="product-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__pic">
+                    <div class="product__details__pic__item">
+                        <img class="product__details__pic__item--large"
+                             src="/ProjectImage/@Model.HotelImageView" alt="">
+                    </div>
+                    <div class="product__details__pic__slider owl-carousel">
+                        @foreach (var item in Model.HotelGalleryList)
+                        {
+                            <img data-imgbigurl="/ProjectImage/@item.HotelGalleryView"
+                                 src="/ProjectImage/@item.HotelGalleryView" alt="">
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__text">
+                    <h3>@Model.HotelName</h3>
+                   @*  <div class="product__details__rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-half-o"></i>
+                        @* <span>(18 reviews)</span> *@
+                    @* </div> *@
+                    <ul>
+                        <li><b>Location</b> <span>@Model.Location</span></li>
+                        <li><b>Contact No.</b> <span>977-@(Model.ContactNo) @(string.IsNullOrEmpty(Model.AlternativeContactNo) ? "" : ", 977-" + Model.AlternativeContactNo)</span></li>
+
+                    </ul>
+                    <br />
+                    <p>
+                        @Model.Description
+                    </p>
+                    <a href="@Url.Action("BookNow","Accomodation",new {id=Model.HotelCode})" class="primary-btn">Book Now</a>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="product__details__tab">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-1" role="tab"
+                               aria-selected="true">Hotel Availability Details</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
+                               aria-selected="false">Property Surroundings Information</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
+                               aria-selected="false">Facility Details</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>Hotel Availability Details</h6>
+                                <div>
+                                    <table class="table text-center">
+                                        <thead>
+                                            <tr>
+                                                <th>RoomType</th>
+                                                <th>Number of Guest</th>
+                                                <th>Number Of Bed</th>
+                                                <th>Discount (%)</th>
+                                                <th>Total Price (Rs)</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.HotelAvailabilityList)
+                                            {
+                                                <tr>
+                                                    <td>@item.RoomType</td>
+                                                    <td>@item.NumberOfGuest</td>
+                                                    <td>@item.NoOfBed</td>
+                                                    <td>@item.DiscountPercent</td>
+                                                    <td>@item.TotalPrice</td>
+                                                    <td>@item.Description</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabs-2" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>Property Surroundings Information</h6>
+                                <div>
+                                    <table class="table text-center">
+                                        <tbody>
+                                            @foreach (var item in Model.HotelPropertySurroundingList)
+                                            {
+                                                <tr>
+                                                    <td>@item.PropertyType</td>
+                                                    <td>@item.Name</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabs-3" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>Facility Details</h6>
+                                <div>
+                                    <table class="table text-center">
+                                        <tbody>
+                                            @foreach (var item in Model.HotelFacilityList)
+                                            {
+                                                <tr>
+                                                    <td>@item.FacilityType</td>
+                                                    <td>@item.Name</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="~/user/js/jquery-3.3.1.min.js"></script>
+<script src="~/user/js/bootstrap.min.js"></script>
+<script src="~/user/js/jquery-ui.min.js"></script>
+<script src="~/user/js/jquery.nice-select.min.js"></script>
+<script src="~/user/js/jquery.slicknav.js"></script>
+<script src="~/user/js/mixitup.min.js"></script>
+<script src="~/user/js/owl.carousel.min.js"></script>
+<script src="~/user/js/main1.js"></script>

@@ -1,0 +1,151 @@
+﻿ @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model HotelApp.Shared.Admin.Gallery.GalleryCommon;
+
+@{
+    ViewData["Title"] = "Manage Setup Page";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link href="~/admin/assets/css/customstyle.css" rel="stylesheet" />
+<style>
+    .fixed-dimensions {
+        width: 300px;
+        height: 340px;
+        object-fit: cover;
+    }
+
+</style>
+<div style="display:flex;justify-content:space-between">
+    <div>
+        <h5 class="py-3 mb-4"><span class="text-muted fw-light text-primary">Gallary Setup / </span>Manage Gallery Details</h5>
+    </div>
+    <div style="display:flex;justify-content:flex-end">
+        <div style="position:relative;right:10px"><button type="button" class="btn btn-default" onclick="javascript:history.go(-1);" style="background-color:gainsboro"><i class='bx bx-arrow-back'></i> Back</button></div>
+    </div>
+</div>
+<div class="form-horizontal manage-body">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title"> Gallery Details </h4>
+            <div class="underLine"></div>
+            <hr />
+        </div>
+        <div class="panel-body">
+            <form asp-area="Admin" asp-action="UploadGalleryDetail" asp-controller="Gallery" method="post" id="manage-hotel-form" enctype="multipart/form-data">
+                <div class="container">
+                    <div class="col-md-12">
+                        @if (Model.GalleryDetailList.Count() > 0)
+                        {
+                            <div class="row">
+                                <h3>Hotel Gallery</h3>
+                                <hr />
+                                @for (int i = 0; i < Model.GalleryDetailList.Count; i++)
+                                {
+                                    <div class="col-md-4">
+                                        <button style="position:relative;left:350px;top:50px"
+                                                type="button"
+                                                id="btnRemove"
+                                                class="btn btn-sm btn-round remove-image"
+                                                data-index="@i"
+                                                data-id="@Model.GalleryDetailList[i].RowId">
+                                            <i class='bx bx-trash' style="font-size:30px"></i>
+                                        </button>
+                                        <div class="photo-container">
+                                            <div class="image-box">
+                                                <img src="~/ProjectImage/@Model.GalleryDetailList[i].GalleryView" alt="profile" class="image-responsive image-curve fixed-dimensions" id="previewImg">
+                                            </div>
+                                            <hr />
+                                        </div>
+                                    </div>
+                                }
+
+
+                            </div>
+                        }
+                        <div class="row">
+                            <div class="form-group">
+                                <table class="table table-bordered table-condensed table-add">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="1"> <h3>Gallery</h3> </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center">Gallery</th>
+                                            <th class="text-center">Preview</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="Feature-items">
+
+                                        <tr class="HotelGalleryFile entryItem">
+                                            <td>
+                                                <input type="file" name="GalleryDetailList[0].GalleryFile" id="HotelGalleryList_0__GalleryFile" class="form-control" accept=".png, .jpg, .jpeg" />
+                                            </td>
+                                            <td style="text-align:center">
+                                                <button type="button" class="btn btn-secondary"><i class='bx bx-images'></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div style="text-align:right">
+                                    <a href="javascript:void(0);" class="btn btn-warning addRow" style="border-radius: 50%; font-size: 20px; width: 30px; height: 40px;" id="addRow">
+                                        <i class="bx bx-plus-circle" style="position:absolute;margin-left:-24px;margin-top:-13px;font-size:50px;"></i>
+                                    </a>
+                                </div>
+                                <script id="Feature-items-template" type="text/x-handlebars-template">
+                                    @{
+                                                 <tr class="LapseRevival entryItem">
+                                                     <td>
+                                                                      <input type="file" name="GalleryDetailList[{{count}}].GalleryFile" class="form-control"  accept=".png, .jpg, .jpeg" />
+                                                     </td>
+                                                         <td style="text-align:center">
+                                                              <button type="button" class="btn btn-secondary"><i class='bx bx-images'></i></button>
+                                                          </td>
+                                                     <td>
+                                                          <button type="button" class="btn btn-sm btn-outline btn-danger btn-round deleteRow"><i class='bx bx-x-circle' style="font-size:30px"></i></button>
+                                                     </td>
+                                                 </tr>
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                        <div class="row container">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary">Upload  Image</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="~/scripts/admin/Hotel/hotelSetup.js"></script>
+    <script src="~/js/handlebars.min.js"></script>
+    <partial name="_AlertPartial" />
+    <script type="text/javascript">
+        $(function () {
+            var hotelSetup = HotelSetupManagement.hotelSetup();
+            hotelSetup.renderGalary();
+        });
+        $(document).ready(function () {
+            $('.remove-image').click(function () {
+                var imageId = $(this).data('id');
+                var index = $(this).data('index');
+
+                $.ajax({
+                    url: '@Url.Action("RemoveImage", "Gallery")',
+                    type: 'POST',
+                    data: { id: imageId },
+                    success: function (response) {
+                        $('.col-md-4').eq(index).remove();
+                    },
+                    error: function () {
+                        alert('An error occurred while trying to remove the image.');
+                    }
+                });
+            });
+        });
+
+
+    </script>
+}

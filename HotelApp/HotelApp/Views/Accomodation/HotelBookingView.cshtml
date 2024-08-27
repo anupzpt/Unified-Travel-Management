@@ -1,0 +1,224 @@
+﻿@using HotelApp.Shared.Common
+@model HotelApp.Shared.Admin.Hotel.HotelCommon
+@inject IHttpContextAccessor HttpContextAccessor
+@using Microsoft.AspNetCore.Http
+
+<link href="~/user/css/elegant-icons.css" rel="stylesheet" />
+<link href="~/user/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/user/css/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/user/css/nice-select.css" rel="stylesheet" />
+<link href="~/user/css/owl.carousel.min.css" rel="stylesheet" />
+<link href="~/user/css/slicknav.min.css" rel="stylesheet" />
+<link href="~/user/css/bootstrap.min2.css" rel="stylesheet" />
+<link href="~/user/css/style2.css" rel="stylesheet" />
+<div class="carousel-header">
+    <div id="carouselId" class="carousel slide" data-bs-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-bs-target="#carouselId" data-bs-slide-to="0"></li>
+            <li data-bs-target="#carouselId" data-bs-slide-to="1"></li>
+            <li data-bs-target="#carouselId" data-bs-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+            <div class="carousel-item active">
+                <img src="~/admin/assets/img/image/pexels-karolina-2031292-3669288.jpg" class="img-fluid" alt="Image">
+                <div class="carousel-caption">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="checkout spad">
+    <div class="container">
+        <div class="checkout__form">
+            <h4>Billing Details</h4>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="checkout__input">
+                        <p>Booking Date</p>
+                        <input type="date" name="BookingDate">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <p>Room Type</p>
+                    <select class="form-control" id="RoomType" name="RoomType" asp-items="@Model.RoomTypeList">
+                        <option>Select Room Type</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-md-6">
+
+                    <div class="checkout__input">
+                        <p>UserName</p>
+                        <input type="text" name="UserName" readonly value="@(StaticData.GetUser(HttpContextAccessor.HttpContext))">
+                    </div>
+                    <div class="checkout__input">
+                        <p>Full Name</p>
+                        <input type="text" name="FullName" readonly value="@(StaticData.GetFullName(HttpContextAccessor.HttpContext))">
+                    </div>
+                    <div class="checkout__input">
+                        <p>Contact No</p>
+                        <input type="text" name="ContactNo" readonly value="@(StaticData.GetContactNo(HttpContextAccessor.HttpContext))">
+                    </div>
+                    <div class="checkout__input">
+                        <p>Email Id</p>
+                        <input type="text" name="EmailId" readonly value="@(StaticData.GetEmailId(HttpContextAccessor.HttpContext))">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="checkout__order">
+                        <h4>Billing Information</h4>
+                        <div class="checkout__order__products">Package <span>Total</span></div>
+                        <ul>
+                            <li>Package Price <span style="float:right">Rs.<label id="PackageTotalAmount"></label></span></li>
+                            <li>Tax Percentage   <span style="float:right"><label id="Tax"></label>%</span></li>
+                            <li>Tax Amount <span style="float:right">Rs.<label id="TaxAmount"></label></span></li>
+                            <li>Service Charge <span style="float:right">Rs.<label id="ServiceChargeLabel"></label></span></li>
+                        </ul>
+                        <hr />
+                        <div class="checkout__order__total">Total <span style="float:right">Rs.<label id="PackageTotalAmt"></label> </span></div>
+                        <p>
+
+                        </p>
+                        <div class="checkout__input__checkbox">
+                            <label for="paypal">
+                                Esewa
+                                <input type="checkbox" id="esewa" checked disabled>
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <button type="button" id="btnBookNow" class="site-btn">
+                            <span class="spinner-border spinner-border-sm" id="btnBookNowSpinner" style="display:none;" role="status" aria-hidden="true"></span>
+                            Confirm Booking
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Verification</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Please enter your verification code to proceed:</p>
+                <div class="form-group">
+                    <label for="verificationCode">Verification Code</label>
+                    <input type="text" class="form-control" id="verificationCode" placeholder="Enter code">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="btnVerifyCode">Verify</button>
+            </div>
+        </div>
+    </div>
+</div>
+<form action="https://uat.esewa.com.np/epay/main" method="POST" id="esewaPayment">
+    <input value="" name="tAmt" type="hidden" id="totalAmount" />
+    <input value="" name="amt" type="hidden" id="Amount" />
+    <input value="" name="txAmt" type="hidden" id="taxAmount" />
+    <input value="" name="psc" type="hidden" id="ServiceCharge" />
+    <input value="0" name="pdc" type="hidden" />
+    <input value="epay_payment" name="scd" type="hidden" />
+    <input value="@Model.RandomNumber" name="pid" type="hidden" />
+    <input type="text" id="success_url" name="su" value="https://localhost:7226/Accomodation/SuccessPayment?Code=@Model.HotelCode" required hidden>
+    <input type="text" id="failure_url" name="fu" value="https://google.com" required hidden>
+</form>
+
+<script src="~/user/js/jquery-3.3.1.min.js"></script>
+<script src="~/user/js/bootstrap.min.js"></script>
+<script src="~/user/js/jquery-ui.min.js"></script>
+<script src="~/user/js/jquery.nice-select.min.js"></script>
+<script src="~/user/js/jquery.slicknav.js"></script>
+<script src="~/user/js/mixitup.min.js"></script>
+<script src="~/user/js/owl.carousel.min.js"></script>
+<script src="~/user/js/main1.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".nice-select").hide();
+            $("#RoomType").show();
+        $("#btnBookNow").click(function () {
+            // Disable the button and show the spinner
+            $("#btnBookNow").prop("disabled", true);
+            $("#btnBookNowSpinner").show();
+
+            // AJAX call
+            $.ajax({
+                url: '@Url.Action("VerifyUserDetails", "Accomodation")', // Action and Controller
+                type: 'POST',
+                data: {
+                    FullName: $("input[name='FullName']").val(),
+                    EmailId: $("input[name='EmailId']").val()
+                },
+                success: function (response) {
+                    // On success, hide the spinner and enable the button
+                    $("#btnBookNow").prop("disabled", false);
+                    $("#btnBookNowSpinner").hide();
+
+                    // Show the verification modal
+                    $("#confirmationModal").modal('show');
+                },
+                error: function (xhr, status, error) {
+                    // On error, hide the spinner and enable the button
+                    $("#btnBookNow").prop("disabled", false);
+                    $("#btnBookNowSpinner").hide();
+
+                    alert('An error occurred. Please try again.');
+                }
+            });
+        });
+        $("#btnVerifyCode").click(function () {
+            var verificationCode = $("#verificationCode").val();
+
+            // AJAX call to MakePayment method
+            $.ajax({
+                url: '@Url.Action("MakePayment", "Accomodation")', // Action and Controller
+                type: 'GET',
+                data: {
+                    code: verificationCode
+                },
+                success: function (response) {
+                    // Handle success (e.g., redirect to a payment success page)
+                    if (response == "0") {
+                        $("#esewaPayment").submit();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Verification failed. Please try again.');
+                }
+            });
+        });
+        $("#RoomType").on('change', function () {
+            $.ajax({
+                url: '@Url.Action("CalculateHotelInformation", "Accomodation")',
+                type: 'POST',
+                data: {
+                    RoomType: $("#RoomType").val(),
+                    HotelCode: "@Model.HotelCode"
+                },
+                success: function (response) {
+                    debugger
+                    $("#totalAmount").val(response.totalAmount);
+                    $("#Amount").val(response.Amount);
+                    $("#taxAmount").val(response.taxAmount);
+                    $("#ServiceCharge").val(response.ServiceCharge);
+                    $("#Tax").text("1");
+
+                    $("#PackageTotalAmount").text(response.Amount);
+                    $("#TaxAmount").text(response.taxAmount);
+                    $("#PackageTotalAmt").text(response.totalAmount);
+                    $("#ServiceChargeLabel").text(response.ServiceCharge);
+                },
+                error: function (xhr, status, error) {
+                }
+            });
+        })
+    });
+</script>

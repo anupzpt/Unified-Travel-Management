@@ -1,0 +1,139 @@
+﻿<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+    <div class="app-brand demo">
+        <a href="@Url.Action("Index","Dashboard", new { area="Admin" })" class="app-brand-link">
+            <span class="app-brand-logo demo">
+                 <img src="~/admin/assets/img/layouts/logo2_2cc3.png" alt="IMG" style="width: 80px; height: 80px; border-radius: 50%;"> 
+            @*     @if (string.IsNullOrEmpty(Model.CompanyImageView))
+                {
+                    <img src="~/admin/assets/img/layouts/logo2_2cc3.png" alt="IMG" style="width: 80px; height: 80px; border-radius: 50%;" id="previewImg">
+                }
+                else
+                {
+                    <img src="~/ProjectImage/@Model.CompanyImageView" alt="IMG" style="width: 80px; height: 80px; border-radius: 50%;" id="previewImg">
+                } 
+                    <img src="~/ProjectImage/@Model.CompanyImageView" alt="IMG" style="width: 80px; height: 80px; border-radius: 50%;" id="previewImg"> *@
+            </span>
+            <span class="app-brand-text menu-text fw-bolder ms-2" style="font-size:30px">Travela</span>
+
+          @*   @if (string.IsNullOrEmpty(Model.CompanyName))
+            {
+                
+                <span class="app-brand-text menu-text fw-bolder ms-2" style="font-size:30px">Travela</span>
+            }
+            else
+            {
+                <span class="app-brand-text menu-text fw-bolder ms-2" style="font-size:30px">@Model.CompanyName</span>
+            } *@
+        </a>
+        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+            <i class="bx bx-chevron-left bx-sm align-middle"></i>
+        </a>
+    </div>
+
+    <div class="menu-inner-shadow"></div>
+
+    <ul class="menu-inner py-1">
+        <!-- Dashboard -->
+        <li class="menu-item">
+            <a href="@Url.Action("Index","Dashboard", new { area="Admin" })" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Dashboard</div>
+            </a>
+        </li>
+
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">System</span>
+        </li>
+        <li class="menu-item">
+            <a href="@Url.Action("Index","HotelSetup", new { area="Admin" })" class="menu-link">
+                <i class="menu-icon bx bx-building-house"></i>
+                <div data-i18n="Account"> Hotel Information</div>
+            </a>
+        </li>
+
+        <li class="menu-item">
+            <a href="@Url.Action("Index","PackageSetup", new { area="Admin" })" class="menu-link">
+                <i class="menu-icon bx bx-package"></i>
+                <div data-i18n="Account"> Package Information</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="@Url.Action("Index","GuideSetup", new { area="Admin" })" class="menu-link">
+                <i class="menu-icon bx bx-male"></i>
+                <div data-i18n="Account"> Guide Information</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="@Url.Action("Index","VechicleInformation", new { area="Admin" })" class="menu-link">
+                <i class="menu-icon bx bxs-car"></i>
+                <div data-i18n="Account"> Vechicle Information</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="@Url.Action("ManageCompanySetup","CompanySetup", new { area="Admin" })" class="menu-link">
+                <i class="menu-icon bx bxs-id-card"></i>
+                <div data-i18n="Account"> Company Information</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="@Url.Action("Index","DriverSetup", new { area="Admin" })" class="menu-link">
+                <i class="menu-icon bx bxs-user-detail"></i>
+                <div data-i18n="Account"> Driver Information</div>
+            </a>
+        </li>
+      
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-cog"></i>
+                <div data-i18n="Account Settings">CMS Setup</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="@Url.Action("Index", "BannerSetup", new { area = "Admin" })" class="menu-link">
+                        <div data-i18n="Account">Banner Setup</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="@Url.Action("Index", "BlogSetup", new { area = "Admin" })" class="menu-link">
+                        <div data-i18n="Account">Blog Setup</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="@Url.Action("Index", "Gallery", new { area = "Admin" })" class="menu-link">
+                        <div data-i18n="Account">Our Galary</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Pages</span>
+        </li>
+
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bxs-business"></i>
+                <div data-i18n="Account Settings">Hotel Details</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="@Url.Action("HotelBookedList", "HotelSetup", new { area = "Admin" })" class="menu-link">
+                        <div data-i18n="Account">Hotel Information</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-package"></i>
+                <div data-i18n="Account Settings">Package Details</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="@Url.Action("PackageBookedList", "HotelSetup", new { area = "Admin" })" class="menu-link">
+                        <div data-i18n="Account">Package Information</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</aside>

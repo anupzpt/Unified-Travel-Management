@@ -1,0 +1,127 @@
+﻿@model HotelApp.Shared.Admin.Hotel.HotelCommon
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Unified Travel Experience System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" href="~/admin/assets/img/layouts/logo2_2cc3.png" type="image/png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            height:100vh;
+            background: #242a73;
+            background: -webkit-linear-gradient(-135deg, #8e9eff, #3a4f8f);
+            background: -o-linear-gradient(-135deg, #8e9eff, #3a4f8f);
+            background: -moz-linear-gradient(-135deg, #8e9eff, #3a4f8f);
+            background: linear-gradient(-135deg, #8e9eff, #3a4f8f);
+        }
+
+        .bill-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .bill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #13357b;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+            .bill-header img {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+            }
+
+        .bill-details {
+            margin-bottom: 20px;
+        }
+
+            .bill-details p {
+                font-size: 18px;
+                color: #555;
+                margin: 5px 0;
+            }
+
+        .total-price {
+            font-size: 22px;
+            color: #13357b;
+            text-align: right;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="container-fluid  position-relative p-0 " style="background-color:#13357b">
+        <nav class="navbar navbar-expand-lg navbar-dark  px-4 px-lg-5 py-3 py-lg-0">
+            <a href="#" class="navbar-brand p-0">
+                <h1 class="m-0" style="color:whitesmoke; margin-right: 20px;">
+                    <img src="~/admin/assets/img/layouts/logo2_2cc3.png" alt="IMG" style="width: 80px; height: 80px; border-radius: 50%;"> Travela
+                </h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+        @*     <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0">
+                    <a href="@Url.Action('Index','Home')" class="nav-item nav-link nav-linkpack">Home</a>
+                    <a href="@Url.Action('Package','Home')" class="nav-item nav-link nav-linkpack">Packages</a>
+                    <a href="@Url.Action('Accomodation','Home')" class="nav-item nav-link nav-linkpack">Accommodation</a>
+                    <a href="@Url.Action('Activities','Home')" class="nav-item nav-link nav-linkpack">Activities</a>
+                    <a href="@Url.Action('Gallery','Home')" class="nav-item nav-link nav-linkpack">Pages</a>
+                    <a href="@Url.Action('Contact','Home')" class="nav-item nav-link">Contact</a>
+                </div>
+            </div> *@
+        </nav>
+    </div>
+
+    <!-- Bill Section -->
+    <div class="bill-container">
+        <div class="bill-header">
+            <div>
+                <h2>Booking Confirmation</h2>
+                <p>Booking ID: <strong>@Model.HotelCode</strong></p>
+            </div>
+            <div>
+                <img src="~/admin/assets/img/layouts/logo2_2cc3.png" alt="IMG">
+            </div>
+        </div>
+
+        <div class="bill-details">
+            <p><strong>Hotel Name:</strong> @Model.HotelName</p>
+        </div>
+
+        <hr>
+
+        <div class="total-price">
+            Total Price: RS 2000
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

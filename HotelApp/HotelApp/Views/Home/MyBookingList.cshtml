@@ -1,0 +1,62 @@
+﻿@{
+    Layout = "~/Views/Shared/_PlanATripLayout.cshtml";
+}
+<div class="container-fluid bg-primary position-relative p-0">
+    <nav class="navbar navbar-expand-lg navbar-dark  px-4 px-lg-5 py-3 py-lg-0">
+        <a href="" class="navbar-brand p-0">
+            <h1 class="m-0" style="color:whitesmoke"><img src="~/admin/assets/img/layouts/logo2_2cc3.png" alt="IMG" style="width: 80px; height: 80px; border-radius: 50%;"> Travela</h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="@Url.Action("Index","Home")" class="nav-item nav-link nav-linkpack">Home</a>
+                <a href="@Url.Action("Package","Home")" class="nav-item nav-link nav-linkpack">Packages</a>
+                <a href="@Url.Action("Accomodation","Home")" class="nav-item nav-link nav-linkpack">Accomodation</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu m-0">
+                        <a href="@Url.Action("Gallery","Home")" class="dropdown-item">Our Gallery</a>
+                        <a href="@Url.Action("Guide","Home")" class="dropdown-item">Travel Guides</a>
+                        <a href="@Url.Action("Blog","Home")" class="dropdown-item">Blog</a>
+                    </div>
+                </div>
+                <a href="@Url.Action("Contact","Home")" class="nav-item nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="card p-2" style="margin-top:50px;">
+    <section class="section-listing p-2">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="nowrap" id="packageSetupManagement" width="100%" style="border-top:5px solid white">
+                        <thead style="background-color:#13357b;color:white">
+                            <tr>
+                                <th>SN</th>
+                                <th>Booking Type</th>
+                                <th>Name</th>
+                                <th>Total Amount</th>
+                                <th>Booking Date</th>
+                                <th>Status</th>
+                                <th data-priority="1">Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+@section scripts {
+    <script src="~/scripts/Admin/Package/packageManagement.js"></script>
+    <partial name="_AlertPartial" />
+    <script type="text/javascript">
+        $(function () {
+            var packageSetup = PackageSetupManagement.packageSetup();
+            packageSetup.renderBookingList();
+        });
+    </script>
+}

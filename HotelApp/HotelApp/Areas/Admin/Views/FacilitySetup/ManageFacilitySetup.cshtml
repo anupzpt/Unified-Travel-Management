@@ -1,0 +1,47 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model HotelApp.Shared.Admin.FacilityCommon
+@{
+    ViewData["Title"] = "Manage Setup Page";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div style="display:flex;justify-content:space-between">
+    <div>
+        <h5 class="py-3 mb-4"><span class="text-muted fw-light text-primary">System /Facility Setup /</span>Manage Facility Category</h5>
+    </div>
+    <div style="display:flex;justify-content:flex-end">
+        <div style="position:relative;right:10px"><button type="button" class="btn btn-default" onclick="javascript:history.go(-1);" style="background-color:gainsboro"><i class='bx bx-arrow-back'></i> Back</button></div>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-xl">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Category Details</h5>
+            </div>
+            <div class="card-body">
+                <form asp-area="Admin" asp-action="AddFacilitySetup" asp-controller="FacilitySetup" method="post" id="manage-FacilitySetup-form">
+                    <div class="mb-3">
+                        <label class="form-label">Category Code</label>
+                        <input type="text" asp-for="FacilityName" class="form-control" placeholder="Enter Category Code" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Category Name</label>
+                        <input type="text" asp-for="Descritpion" class="form-control" placeholder="Enter Category Name" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Category Details</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/scripts/admin/facilitysetup/facilitysetup.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var facilitySetup = FacilitySetupManagement.facilitySetup();
+            facilitySetup.renderManage();
+        });
+    </script>
+}

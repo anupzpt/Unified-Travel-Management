@@ -1,0 +1,22 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<form action="https://uat.esewa.com.np/epay/main" method="POST">
+    <input  value="100" name="tAmt" type="hidden"/>
+    <input  value="90" name="amt" type="hidden"/>
+    <input  value="5" name="txAmt" type="hidden"/>
+    <input  value="2" name="psc" type="hidden"/>
+    <input  value="3" name="pdc" type="hidden"/>
+    <input  value="epay_payment" name="scd" type="hidden"/>
+    <input  value="Hari5" name="pid" type="hidden"/>
+    <input type="text" id="success_url" name="su" value="https://esewa.com.np" required>
+    <input type="text" id="failure_url" name="fu" value="https://google.com" required>
+    <input type="text" id="signed_field_names" name="signed_field_names" value="total_amount,transaction_uuid,product_code" required>
+    <input value="Submit" type="submit">
+</form>

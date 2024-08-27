@@ -1,0 +1,94 @@
+﻿<link href="~/user/css/style.css" rel="stylesheet" />
+<div class="container-fluid bg-primary position-relative p-0">
+    <nav class="navbar navbar-expand-lg navbar-dark  px-4 px-lg-5 py-3 py-lg-0">
+        <a href="" class="navbar-brand p-0">
+            <h1 class="m-0" style="color:whitesmoke"><img src="~/admin/assets/img/layouts/logo2_2cc3.png" alt="IMG" style="width: 80px; height: 80px; border-radius: 50%;"> Travela</h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="@Url.Action("Index","Home")" class="nav-item nav-link nav-linkpack">Home</a>
+                <a href="@Url.Action("Package","Home")" class="nav-item nav-link nav-linkpack">Packages</a>
+                <a href="@Url.Action("Accomodation","Home")" class="nav-item nav-link nav-linkpack">Accomodation</a>
+                <a href="@Url.Action("Activities","Home")" class="nav-item nav-link nav-linkpack">Activities</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu m-0">
+                        <a href="@Url.Action("Gallery","Home")" class="dropdown-item">Our Gallery</a>
+                        <a href="@Url.Action("Guide","Home")" class="dropdown-item">Travel Guides</a>
+                        <a href="@Url.Action("Blog","Home")" class="dropdown-item">Blog</a>
+                        <a href="@Url.Action("Review","Home")" class="dropdown-item">Testimonial</a>
+                    </div>
+                </div>
+                <a href="@Url.Action("Contact","Home")" class="nav-item nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+</div>
+<!-- Footer Start -->
+<div class="container-fluid footer py-5">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-md-6 col-lg-6 col-xl-6">
+                <div class="footer-item d-flex flex-column">
+                    <h4 class="mb-4 text-white">Get In Touch</h4>
+                    <a href=""><i class="fas fa-home me-2"></i> KATHMANDU, NEPAL</a>
+                    <a href=""><i class="fas fa-envelope me-2"></i> traveladestination@gmail.com</a>
+                    <a href=""><i class="fas fa-phone me-2"></i> +9761987651</a>
+                    @*   <div class="d-flex align-items-center">
+                    <i class="fas fa-share fa-2x text-white me-2"></i>
+                    <a class="btn-square btn btn-primary rounded-circle mx-1" href=""><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn-square btn btn-primary rounded-circle mx-1" href=""><i class="fab fa-twitter"></i></a>
+                    <a class="btn-square btn btn-primary rounded-circle mx-1" href=""><i class="fab fa-instagram"></i></a>
+                    <a class="btn-square btn btn-primary rounded-circle mx-1" href=""><i class="fab fa-linkedin-in"></i></a>
+                    </div> *@
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-3">
+                <div class="footer-item d-flex flex-column">
+                    <h4 class="mb-4 text-white">Company</h4>
+                    <a href=""><i class="fas fa-angle-right me-2"></i> Gallery</a>
+                    <a href=""><i class="fas fa-angle-right me-2"></i> Blog</a>
+                    <a href=""><i class="fas fa-angle-right me-2"></i> Travel Guide</a>
+                    <a href=""><i class="fas fa-angle-right me-2"></i> Testimonial</a>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-3">
+                <div class="footer-item">
+                    <div class="row gy-3 gx-2 mb-4">
+                        <div class="col-xl-6">
+                            <form>
+                                <div class="form-floating">
+                                    <select class="form-select bg-dark border" id="select1">
+                                        <option value="1">English</option>
+                                    </select>
+                                    <label for="select1">English</label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <h4 class="text-white mb-3">Payments</h4>
+                    <div class="footer-bank-card">
+                        <a href="#" class="text-white me-2"><img src="~/user/img/esewa.png" style="width: 50px; height: 50px; border-radius: 50%; /><i class="fab fa-cc-amex fa-2x"></i></a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+    <!-- Copyright Start -->
+    <div class="container-fluid copyright text-body py-4">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-md-6 text-center text-md-end mb-md-0">
+                    <i class="fas fa-copyright me-2"></i><a class="text-white" href="#">Travela</a>, All right reserved.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Copyright End -->
+

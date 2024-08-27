@@ -1,0 +1,723 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model HotelApp.Shared.Admin.Package.PackageCommon;
+@{
+    ViewData["Title"] = "Manage Vechicle Setup Page";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link href="~/admin/assets/css/customstyle.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<style>
+    .fixed-dimensions {
+        width: 300px;
+        height: 340px;
+        object-fit: cover; /* This ensures the image covers the area while maintaining aspect ratio */
+    }
+
+</style>
+<div style="display:flex;justify-content:space-between">
+    <div>
+        <h5 class="py-3 mb-4"><span class="text-muted fw-light text-primary">Package Setup / </span>Manage Package Details</h5>
+    </div>
+    <div style="display:flex;justify-content:flex-end">
+        <div style="position:relative;right:10px"><button type="button" class="btn btn-default" onclick="javascript:history.go(-1);" style="background-color:gainsboro"><i class='bx bx-arrow-back'></i> Back</button></div>
+    </div>
+</div>
+<div class="form-horizontal manage-body">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">Package Details</h4>
+            <div class="underLine"></div>
+            <hr />
+        </div>
+        <div class="panel-body">
+            <form asp-area="Admin" asp-action=@(string.IsNullOrEmpty(Model.PackageCode) ? "AddPackageDetails" : "UpdatePackageDetails") asp-controller="PackageSetup" method="post" id="manage-package-form" enctype="multipart/form-data">
+                <div class="container">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-8 form-view">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Package Type</label>
+                                    <div class="col-sm-8">
+                                        <select asp-for="PackageType" asp-items="@Model.PackageTypeList" class="form-control">
+                                            <option value="">Select Package Type</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <h3>Package Information</h3>
+                                <hr />
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Package Name</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" asp-for="PackageName" class="form-control" placeholder="Enter Package Name" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Country</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" asp-for="Country" class="form-control" placeholder="Enter Country Name" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Duration</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" asp-for="Duration" class="form-control" placeholder="Enter Package Duration" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Best Season</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" asp-for="BestSeason" class="form-control" placeholder="Enter Best Season " />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Package Average Cost</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" asp-for="PackageAverageCost" class="form-control" placeholder="Enter Package Average Cost" />
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Group</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" asp-for="Group" asp-items="@Model.GroupTypeList">
+                                            <option value="">Select Group Type</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="photo-container">
+                                    <div class="image-box">
+                                        @if (string.IsNullOrEmpty(Model.PackageCode))
+                                        {
+                                            <img src="~/admin/assets/img/image/uploadImage.png" alt="profile" class="image-responsive image-curve fixed-dimensions" id="previewImg">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/ProjectImage/@Model.PackageImageView" alt="profile" class="image-responsive image-curve fixed-dimensions" id="previewImg">
+                                        }
+                                    </div>
+                                    <hr />
+                                    <div class="div-button">
+                                        <div class="button-upload">
+                                            <input type="file" asp-for="PackageImageFile" class="file-upload form-control" accept=".png, .jpg, .jpeg" />
+                                            <input type="hidden" asp-for="PackageImageView" />
+                                            <input type="hidden" asp-for="PackageCode" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Minimum Person</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" asp-for="MinimumPerson" class="form-control" placeholder="Enter Minimum Person" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Maximum Person</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" asp-for="MaximumPerson" class="form-control" placeholder="Enter  Maximum Person" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Maximum Altitude</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" asp-for="MaxAltiude" class="form-control" placeholder="Enter Maximum Altitude" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Accommodation</label>
+                                    <div class="col-sm-12">
+                                        <input class="form-control" asp-for="Accommodation" placeholder="Enter Accommodation Ex(.../...)" />
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Transportation</label>
+                                    <div class="col-sm-12">
+                                        <input class="form-control" asp-for="Transportation" placeholder="Enter Transportation Ex(.../...)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Guide</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" asp-for="GuideCode" asp-items="@Model.GuideList">
+                                            <option value="">Select Guide</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Route Map</label>
+                                    <div class="col-sm-12">
+                                        <input type="File" asp-for="RouteImageFile" class="file-upload form-control" accept=".png, .jpg, .jpeg" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Package Overview</label>
+                                    <div class="col-sm-12">
+                                        <textarea class="form-control" asp-for="Description" placeholder="Enter Package Overview"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="Feature-items">
+                                <h4>Package Itinerary Details</h4>
+                                <hr />
+                                @if (Model.PackageItineraries != null)
+                                {
+                                    if (Model.PackageItineraries.Count() > 0)
+                                    {
+                                        for (int i = 0; i < Model.PackageItineraries.Count; i++)
+                                        {
+                                            <div class="table-added entryItem">
+                                                <fieldset>
+
+                                                    <button type="button" class="btn btn-primary btn-sm deleteRow"><i class="mdi mdi-delete"></i></button>
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Title</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" name="PackageItineraries[@i].Title" id="PackageItineraries_@(i)__Title" placeholder="Enter Package Title" class="form-control" value="@Model.PackageItineraries[i].Title" />
+                                                                    <span id="PackageItineraries_@(i)__Title_jserror"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Accomodation</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" name="PackageItineraries[@i].Accomodation" id="PackageItineraries_@(i)__Accomodation" placeholder="Enter Package Feature" class="form-control" value="@Model.PackageItineraries[i].Accomodation" />
+                                                                    <span id="PackageItineraries_@(i)__Accomodation_jserror"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Hotel</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" name="PackageItineraries[@i].HotelCode" id="PackageItineraries_@(i)__HotelCode" placeholder="Enter Package Feature" class="form-control" value="@Model.PackageItineraries[i].HotelCode" />
+                                                                    <span id="PackageItineraries_@(i)__HotelCode_jserror"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Meals</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" name="PackageItineraries[@i].Meals" id="PackageItineraries_@(i)__Meals" placeholder="Enter Meal Information" class="form-control" value="@Model.PackageItineraries[i].Meals" />
+                                                                    <span id="PackageItineraries_@(i)__Meals_jserror"></span>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label"> Transportation </label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" name="PackageItineraries[@i].Transport" id="PackageItineraries_@(i)__Transport" placeholder="Enter Package Feature" class="form-control" value="@Model.PackageItineraries[i].Transport" />
+                                                                    <span id="PackageItineraries_@(i)__Transport_jserror"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label"> Notes </label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" name="PackageItineraries[@i].Note" id="PackageItineraries_@(i)__Note" placeholder="Enter Package Notes" class="form-control" value="@Model.PackageItineraries[i].Note" />
+                                                                    <span id="PackageItineraries_@(i)__Note_jserror"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label"> Description </label>
+                                                                <div class="col-sm-10">
+                                                                    <textarea class="form-control" name="PackageItineraries[@i].Description" id="PackageItineraries_@(i)__Description" placeholder="Enter Package Description">@Model.PackageItineraries[i].Description"</textarea>
+                                                                    <span id="PackageItineraries_@(i)__Description_jserror"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="table-added entryItem">
+                                            <fieldset>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Title</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" name="PackageItineraries[0].Title" id="PackageItineraries_0__Title" placeholder="Enter Package Title" class="form-control" />
+                                                                <span id="PackageItineraries_(0)__Title_jserror"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Accomodation</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" name="PackageItineraries[0].Accomodation" id="PackageItineraries_0__Accomodation" placeholder="Enter Package Feature" class="form-control" />
+                                                                <span id="PackageItineraries_(0)__Accomodation_jserror"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Hotel</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" name="PackageItineraries[0].HotelCode" id="PackageItineraries_0__HotelCode" placeholder="Enter Package Feature" class="form-control" />
+                                                                <span id="PackageItineraries_(0)__HotelCode_jserror"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Meals</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" name="PackageItineraries[0].Meals" id="PackageItineraries_0__Meals" placeholder="Enter Meal Information" class="form-control" />
+                                                                <span id="PackageItineraries_(0)__Meals_jserror"></span>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label"> Transportation </label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" name="PackageItineraries[0].Transport" id="PackageItineraries_0__Transport" placeholder="Enter Package Feature" class="form-control" />
+                                                                <span id="PackageItineraries_(0)__Transport_jserror"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label"> Notes </label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" name="PackageItineraries[0].Note" id="PackageItineraries_0__Note" placeholder="Enter Package Notes" class="form-control" />
+                                                                <span id="PackageItineraries_(0)__Note_jserror"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label"> Description </label>
+                                                            <div class="col-sm-10">
+                                                                <textarea class="form-control" name="PackageItineraries[0].Description" id="PackageItineraries_0__Description" placeholder="Enter Package Description"></textarea>
+                                                                <span id="PackageItineraries_(0)__Description_jserror"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="table-added entryItem">
+                                        <fieldset>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Title</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="PackageItineraries[0].Title" id="PackageItineraries_0__Title" placeholder="Enter Package Title" class="form-control" />
+                                                            <span id="PackageItineraries_(0)__Title_jserror"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Accomodation</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="PackageItineraries[0].Accomodation" id="PackageItineraries_0__Accomodation" placeholder="Enter Package Feature" class="form-control" />
+                                                            <span id="PackageItineraries_(0)__Accomodation_jserror"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Hotel</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="PackageItineraries[0].HotelCode" id="PackageItineraries_0__HotelCode" placeholder="Enter Package Feature" class="form-control" />
+                                                            <span id="PackageItineraries_(0)__HotelCode_jserror"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Meals</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="PackageItineraries[0].Meals" id="PackageItineraries_0__Meals" placeholder="Enter Meal Information" class="form-control" />
+                                                            <span id="PackageItineraries_(0)__Meals_jserror"></span>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label"> Transportation </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="PackageItineraries[0].Transport" id="PackageItineraries_0__Transport" placeholder="Enter Package Feature" class="form-control" />
+                                                            <span id="PackageItineraries_(0)__Transport_jserror"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label"> Notes </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="PackageItineraries[0].Note" id="PackageItineraries_0__Note" placeholder="Enter Package Notes" class="form-control" />
+                                                            <span id="PackageItineraries_(0)__Note_jserror"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label"> Description </label>
+                                                        <div class="col-sm-10">
+                                                            <textarea class="form-control" name="PackageItineraries[0].Description" id="PackageItineraries_0__Description" placeholder="Enter Package Description"></textarea>
+                                                            <span id="PackageItineraries_(0)__Description_jserror"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                }
+                            </div>
+                            <script id="Feature-items-template" type="text/x-handlebars-template">
+                                <div class="table-added entryItem">
+                                   <fieldset>
+                                       <div class="row">
+                                           <div class="col-sm-6">
+                                               <div class="form-group">
+                                                   <label class="col-sm-4 control-label">Title</label>
+                                                   <div class="col-sm-8">
+                                                       <input type="text" name="PackageItineraries[{{count}}].Title" id="PackageItineraries_{{count}}__Title" placeholder="Enter Package Title" class="form-control"/>
+                                                       <span id="PackageItineraries_{{count}}__Title_jserror"></span>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                           <div class="col-sm-6">
+                                               <div class="form-group">
+                                                   <label class="col-sm-4 control-label">Accomodation</label>
+                                                   <div class="col-sm-8">
+                                                       <input type="text" name="PackageItineraries[{{count}}].Accomodation" id="PackageItineraries_{{count}}__Accomodation" placeholder="Enter Package Feature" class="form-control"/>
+                                                       <span id="PackageItineraries_{{count}}__Accomodation_jserror"></span>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-sm-6">
+                                               <div class="form-group">
+                                                   <label class="col-sm-4 control-label">Hotel</label>
+                                                   <div class="col-sm-8">
+                                                       <input type="text" name="PackageItineraries[{{count}}].HotelCode" id="PackageItineraries_{{count}}__HotelCode" placeholder="Enter Package Feature" class="form-control"/>
+                                                       <span id="PackageItineraries_{{count}}__HotelCode_jserror"></span>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                           <div class="col-sm-6">
+                                               <div class="form-group">
+                                                   <label class="col-sm-4 control-label">Meals</label>
+                                                   <div class="col-sm-8">
+                                                       <input type="text" name="PackageItineraries[{{count}}].Meals" id="PackageItineraries_{{count}}__Meals" placeholder="Enter Meal Information" class="form-control"/>
+                                                       <span id="PackageItineraries_{{count}}__Meals_jserror"></span>
+
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-sm-6">
+                                               <div class="form-group">
+                                                   <label class="col-sm-4 control-label"> Transportation </label>
+                                                   <div class="col-sm-8">
+                                                       <input type="text" name="PackageItineraries[{{count}}].Transport" id="PackageItineraries_{{count}}__Transport" placeholder="Enter Package Feature" class="form-control"/>
+                                                       <span id="PackageItineraries_{{count}}__Transport_jserror"></span>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                            <div class="col-sm-6">
+                                               <div class="form-group">
+                                                   <label class="col-sm-4 control-label"> Notes </label>
+                                                   <div class="col-sm-8">
+                                                       <input type="text" name="PackageItineraries[{{count}}].Note" id="PackageItineraries_{{count}}__Note" placeholder="Enter Package Notes" class="form-control"/>
+                                                       <span id="PackageItineraries_{{count}}__Note_jserror"></span>
+                                                   </div>
+                                               </div>
+                                           </div>
+
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-sm-12">
+                                               <div class="form-group">
+                                                   <label class="col-sm-4 control-label"> Description </label>
+                                                   <div class="col-sm-10">
+                                                      <textarea class="form-control" name="PackageItineraries[{{count}}].Description" id="PackageItineraries_{{count}}__Description" placeholder="Enter Package Description"></textarea>
+                                                       <span id="PackageItineraries_{{count}}__Description_jserror"></span>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </fieldset>
+                                </div>
+                            </script>
+                            <hr />
+                            <div style="text-align:right">
+                                <a href="javascript:void(0);" class="btn addRow" style="border-radius: 50%; font-size: 20px; width: 30px; height: 40px;" id="addRow">
+                                    <i class="bx bx-plus-circle" style="position:absolute;margin-left:-24px;margin-top:-13px;font-size:50px;color:black"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <table class="table table-bordered table-condensed table-add">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="7"> <h4>Package Availability</h4> </th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Year</th>
+                                                <th class="text-center">Month</th>
+                                                <th class="text-center">Available Date</th>
+                                                <th class="text-center">Package Cost</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="PackageAvailability-items">
+                                            @if (Model.PackageAvailabilities.Count > 0)
+                                            {
+                                                for (int i = 0; i < Model.PackageAvailabilities.Count; i++)
+                                                {
+                                                    <tr class="PackageAvailability entryItem">
+                                                        <td>
+                                                            <input type="text" name="PackageAvailabilities[@i].Year" id="PackageAvailabilities_@(i)__Year" placeholder="Enter Year" class="form-control" value="@Model.PackageAvailabilities[i].Year" />
+                                                            <span id="PackageAvailabilities_(@i)__Year_jserror"></span>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="PackageAvailabilities[@i].Month" id="PackageAvailabilities_@(i)__Month" placeholder="Enter Package Feature" class="form-control" value="@Model.PackageAvailabilities[i].Month" />
+                                                            <span id="PackageAvailabilities_(@i)__Month_jserror"></span>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="PackageAvailabilities[@i].AvailableDate" id="PackageAvailabilities_@(i)__AvailableDate" placeholder="Enter Package Feature" class="form-control" value="@Model.PackageAvailabilities[i].AvailableDate" />
+                                                            <span id="PackageAvailabilities_(@i)__AvailableDate_jserror"></span>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="PackageAvailabilities[@i].PackageCost" id="PackageAvailabilities_@(i)__PackageCost" placeholder="Enter Meal Information" class="form-control" value="@Model.PackageAvailabilities[i].PackageCost" />
+                                                            <span id="PackageItineraries_(@i)__PackageCost_jserror"></span>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-sm btn-outline btn-danger btn-round deleteRow"><i class='bx bx-x-circle' style="font-size:30px"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr class="PackageAvailability entryItem">
+                                                    <td>
+                                                        <input type="text" name="PackageAvailabilities[0].Year" id="PackageAvailabilities_0__Year" placeholder="Enter Year" class="form-control" />
+                                                        <span id="PackageAvailabilities_0__Year_jserror"></span>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="PackageAvailabilities[0].Month" id="PackageAvailabilities_0__Month" placeholder="Enter Month" class="form-control" />
+                                                        <span id="PackageAvailabilities_0__Month_jserror"></span>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="PackageAvailabilities[0].AvailableDate" id="PackageAvailabilities_0__AvailableDate" placeholder="Enter Package Available Date" class="form-control" />
+                                                        <span id="PackageAvailabilities_0__AvailableDate_jserror"></span>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="PackageAvailabilities[0].PackageCost" id="PackageAvailabilities_0__PackageCost" placeholder="Enter Package Cost" class="form-control" />
+                                                        <span id="PackageItineraries_0__PackageCost_jserror"></span>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                    <div style="text-align:right">
+                                        <a href="javascript:void(0);" class="btn addRow" style="border-radius: 50%; font-size: 20px; width: 30px; height: 40px;" id="addPackageAvailabilityRow">
+                                            <i class="bx bx-plus-circle" style="position:absolute;margin-left:-24px;margin-top:-13px;font-size:50px;color:black"></i>
+                                        </a>
+                                    </div>
+                                    <script id="PackageAvailability-items-template" type="text/x-handlebars-template">
+                                        @{
+                                              <tr class="PackageAvailability entryItem">
+                                                  <td>
+                                                      <input type="text" name="PackageAvailabilities[{{count}}].Year" id="PackageAvailabilities_0__Year" placeholder="Enter Year" class="form-control"/>
+                                                      <span id="PackageAvailabilities_0__Year_jserror"></span>
+                                                  </td>
+                                                  <td>
+                                                      <input type="text" name="PackageAvailabilities[{{count}}].Month" id="PackageAvailabilities_0__Month" placeholder="Enter Month" class="form-control"/>
+                                                      <span id="PackageAvailabilities_0__Month_jserror"></span>
+                                                  </td>
+                                                  <td>
+                                                      <input type="text" name="PackageAvailabilities[{{count}}].AvailableDate" id="PackageAvailabilities_0__AvailableDate" placeholder="Enter Package Available Date" class="form-control" />
+                                                      <span id="PackageAvailabilities_0__AvailableDate_jserror"></span>
+                                                  </td>
+                                                  <td>
+                                                      <input type="text" name="PackageAvailabilities[{{count}}].PackageCost" id="PackageAvailabilities_0__PackageCost" placeholder="Enter Package Cost" class="form-control"/>
+                                                      <span id="PackageItineraries_0__PackageCost_jserror"></span>
+                                                  </td>
+                                              </tr>
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <table class="table table-bordered table-condensed table-add">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="7"> <h4>Package Inclusion Excludes</h4> </th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">Inclusion Exclude Type</th>
+                                                <th class="text-center">Month</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="PackageInclusionExclude-items">
+                                            @if (Model.InclusionExcludesPackage.Count > 0)
+                                            {
+                                                for (int i = 0; i < Model.InclusionExcludesPackage.Count; i++)
+                                                {
+                                                    <tr class="PackageInclusionExclude entryItem">
+                                                        <td>
+                                                            <select class="form-control" id="InclusionExcludesPackage[@i].IncludeExclude" name="InclusionExcludesPackage[@i].IncludeExclude">
+                                                                <option value="">Select Inclusion Exclude</option>
+                                                                <option value="Include">Include</option>
+                                                                <option value="Exclude">Exclude</option>
+                                                            </select>
+                                                            <span id="InclusionExcludesPackage_(@i)__IncludeExclude_jserror"></span>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="InclusionExcludesPackage[@i].Description" id="InclusionExcludesPackage_@(i)__Description" placeholder="Enter Package Feature" class="form-control" value="@Model.InclusionExcludesPackage[i].Description" />
+                                                            <span id="InclusionExcludesPackage_(@i)__Description_jserror"></span>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-sm btn-outline btn-danger btn-round deleteRow"><i class='bx bx-x-circle' style="font-size:30px"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr class="PackageInclusionExclude entryItem">
+                                                    <td>
+                                                        <select class="form-control" id="InclusionExcludesPackage_0__IncludeExclude" name="InclusionExcludesPackage[0].IncludeExclude">
+                                                            <option value="">Select Inclusion Exclude</option>
+                                                            <option value="Include">Include</option>
+                                                            <option value="Exclude">Exclude</option>
+                                                        </select>
+                                                        <span id="InclusionExcludesPackage_0__IncludeExclude_jserror"></span>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="InclusionExcludesPackage[0].Description" id="InclusionExcludesPackage_0__Description" placeholder="Enter Package Feature" class="form-control"/>
+                                                        <span id="InclusionExcludesPackage_0__Description_jserror"></span>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                    <div style="text-align:right">
+                                        <a href="javascript:void(0);" class="btn addRow" style="border-radius: 50%; font-size: 20px; width: 30px; height: 40px;" id="addPackageInclusionExcludeRow">
+                                            <i class="bx bx-plus-circle" style="position:absolute;margin-left:-24px;margin-top:-13px;font-size:50px;color:black"></i>
+                                        </a>
+                                    </div>
+                                    <script id="PackageInclusionExclude-items-template" type="text/x-handlebars-template">
+                                        @{
+                                            <tr class="PackageAvailability entryItem">
+                                                  <td>
+                                                    <select class="form-control" id="InclusionExcludesPackage_{{count}}__IncludeExclude" name="InclusionExcludesPackage[{{count}}].IncludeExclude">
+                                                        <option value="">Select Inclusion Exclude</option>
+                                                        <option value="Include">Include</option>
+                                                        <option value="Exclude">Exclude</option>
+                                                    </select>
+                                                    <span id="InclusionExcludesPackage_{{count}}__IncludeExclude_jserror"></span>
+                                                </td>
+                                                <td>
+                                                     <input type="text" name="InclusionExcludesPackage[{{count}}].Description" id="InclusionExcludesPackage_{{count}}__Description" placeholder="Enter Package Feature" class="form-control" />
+                                                     <span id="InclusionExcludesPackage_{{count}}__Description_jserror"></span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row container">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary">@(string.IsNullOrEmpty(Model.PackageCode) ? "Add Package Details" : "Update Package Details") </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="~/scripts/Admin/Package/packageManagement.js"></script>
+    <script src="~/admin/assets/js/hotel_calendar.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="~/js/handlebars.min.js"></script>
+    <partial name="_AlertPartial" />
+    <script type="text/javascript">
+        $(function () {
+            var packageSetup = PackageSetupManagement.packageSetup();
+            packageSetup.renderManage();
+        });
+    </script>
+}

@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Home Information Setup";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div style="display:flex;justify-content:space-between">
+    <div>
+        <h5 class="py-3 mb-4"><span class="text-muted fw-light text-primary">Hotel Detail /Hotel Information Setup /</span>Add Hotel Information </h5>
+    </div>
+    <div style="display:flex;justify-content:flex-end">
+        <div style="position:relative;right:10px"><button type="button" class="btn btn-default" onclick="javascript:history.go(-1);" style="background-color:gainsboro"><i class='bx bx-arrow-back'></i> Back</button></div>
+        <div><a asp-area="Admin" asp-controller="HotelInformationSetup" asp-action="HotelInformationSetupDetail" class="btn btn-primary text-white"><i class='bx bx-plus'></i>Add Hotel Information</a></div>
+    </div>
+</div>
+<div class="card p-2">
+    <section class="section-listing">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="nowrap" id="facilitySetupManagement">
+                        <thead>
+                            <tr>
+                                <th>SN</th>
+                                <th>Hotel Code</th>
+                                <th>Hotel Name</th>
+                                <th>Hotel Location</th>
+                                <th data-priority="1">Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+@section scripts {
+    <script src="~/scripts/admin/homeinformationsetup/homeinformationsetup.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var homeInformationSetup = HomeInformationSetupManagement.homefacilitySetup();
+            homeInformationSetup.renderIndex();
+        });
+    </script>
+}

@@ -1,0 +1,620 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model HotelApp.Shared.Admin.Hotel.HotelCommon;
+
+@{
+    ViewData["Title"] = "Manage Setup Page";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link href="~/admin/assets/css/customstyle.css" rel="stylesheet" />
+<style>
+    .fixed-dimensions {
+        width: 300px;
+        height: 340px;
+        object-fit: cover;
+    }
+
+</style>
+<div style="display:flex;justify-content:space-between">
+    <div>
+        <h5 class="py-3 mb-4"><span class="text-muted fw-light text-primary">Hotel Setup / </span>Manage Hotel Information Details</h5>
+    </div>
+    <div style="display:flex;justify-content:flex-end">
+        <div style="position:relative;right:10px"><button type="button" class="btn btn-default" onclick="javascript:history.go(-1);" style="background-color:gainsboro"><i class='bx bx-arrow-back'></i> Back</button></div>
+    </div>
+</div>
+<div class="form-horizontal manage-body">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">Hotel Details</h4>
+            <div class="underLine"></div>
+            <hr />
+        </div>
+        <div class="panel-body">
+            <form asp-area="Admin" asp-action=@(string.IsNullOrEmpty(Model.HotelCode) ? "AddHotelSetup" : "UpdateHotelSetup") asp-controller="HotelSetup" method="post" id="manage-hotel-form" enctype="multipart/form-data">
+                <div class="container">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-8 form-view">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Accommodation Type</label>
+                                    <div class="col-sm-8">
+                                        <select asp-for="AccommodationType" asp-items="@Model.AccommodationTypeList" class="form-control">
+                                            <option value="">Select Accommodation Type</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <h3>Hotel Information</h3>
+                                <hr />
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Hotel Name</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" asp-for="HotelName" class="form-control" placeholder="Enter Hotel Name" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Location</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" asp-for="Location" class="form-control" placeholder="Enter Hotel Location" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Contact No</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" asp-for="ContactNo" class="form-control" placeholder="Enter Contact No" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Alternative Contact No</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" asp-for="AlternativeContactNo" class="form-control" placeholder="Enter Alternative Contact No" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Description</label>
+                                    <div class="col-sm-12">
+                                        <textarea asp-for="Description" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="photo-container">
+                                    <div class="image-box">
+                                        @if (string.IsNullOrEmpty(Model.HotelCode))
+                                        {
+                                            <img src="~/admin/assets/img/image/uploadImage.png" alt="profile" class="image-responsive image-curve fixed-dimensions" id="previewImg">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/ProjectImage/@Model.HotelImageView" alt="profile" class="image-responsive image-curve fixed-dimensions" id="previewImg">
+                                        }
+                                    </div>
+                                    <hr />
+                                    <div class="div-button">
+                                        <div class="button-upload">
+                                            <input type="file" asp-for="HotelImageFile" class="file-upload form-control" accept=".png, .jpg, .jpeg" />
+                                            <input type="hidden" asp-for="HotelImageView" />
+                                            <input type="hidden" asp-for="HotelCode" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="Availability-items">
+                                <h4>Hotel Availability Details</h4>
+                                <hr />
+
+                                @if (Model.HotelAvailabilityList.Count() > 0)
+                                {
+                                    for (int i = 0; i < Model.HotelAvailabilityList.Count; i++)
+                                    {
+                                        <div class="table-added entryItem">
+                                            <fieldset>
+                                                <div style="text-align:right">
+                                                    <button type="button" class="btn btn-primary btn-sm deleteAvailabilityRow"><i class='bx bxs-trash'></i></button>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Room Type</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" name="HotelAvailabilityList[@i].RoomType" id="HotelAvailabilityList_@(i)__RoomType" placeholder="Enter Hotel RoomType" class="form-control" value="@Model.HotelAvailabilityList[i].RoomType" />
+                                                                <span id="HotelAvailabilityList_@(i)__RoomType_jserror"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Number Of Guest</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" name="HotelAvailabilityList[@i].NumberOfGuest" id="HotelAvailabilityList_@(i)__NumberOfGuest" placeholder="Enter NumberOfGuest" class="form-control" value="@Model.HotelAvailabilityList[i].NumberOfGuest" />
+                                                                <span id="HotelAvailabilityList_@(i)__NumberOfGuest_jserror"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Number Of Bed</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" name="HotelAvailabilityList[@i].NoOfBed" id="HotelAvailabilityList_@(i)__NoOfBed" placeholder="Enter NoOfBed" class="form-control" value="@Model.HotelAvailabilityList[i].NoOfBed" />
+                                                                <span id="HotelAvailabilityList_@(i)__NoOfBed_jserror"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Price</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" name="HotelAvailabilityList[@i].Price" id="HotelAvailabilityList_@(i)__Price" placeholder="Enter Price" class="form-control" value="@Model.HotelAvailabilityList[i].Price" />
+                                                                <span id="HotelAvailabilityList_@(i)__Price_jserror"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Hotel Room Number</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" name="HotelAvailabilityList[@i].RoomNo" id="HotelAvailabilityList_@(i)__RoomNo" placeholder="Enter RoomNo" class="form-control" value="@Model.HotelAvailabilityList[i].RoomNo" />
+                                                                <span id="HotelAvailabilityList_@(i)__RoomNo_jserror"></span>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Discount Percent</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" name="HotelAvailabilityList[@i].DiscountPercent" id="HotelAvailabilityList_@(i)__DiscountPercent" placeholder="Enter Discount Percent" class="form-control" value="@Model.HotelAvailabilityList[i].DiscountPercent" />
+                                                                <span id="HotelAvailabilityList_@(i)__DiscountPercent_jserror"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Total Price</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" name="HotelAvailabilityList[@i].TotalPrice" id="HotelAvailabilityList_@(i)__TotalPrice" placeholder="Enter Total Price" class="form-control" value="@Model.HotelAvailabilityList[i].TotalPrice" />
+                                                                <span id="HotelAvailabilityList_@(i)__TotalPrice_jserror"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="table-added entryItem">
+                                        <fieldset>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Room Type</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="HotelAvailabilityList[0].RoomType" id="HotelAvailabilityList_0__RoomType" placeholder="Enter Hotel RoomType" class="form-control" />
+                                                            <span id="HotelAvailabilityList_(0)__RoomType_jserror"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Number Of Guest</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="HotelAvailabilityList[0].NumberOfGuest" id="HotelAvailabilityList_0__NumberOfGuest" placeholder="Enter NumberOfGuest" class="form-control" />
+                                                            <span id="HotelAvailabilityList_(0)__NumberOfGuest_jserror"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Number Of Bed</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="HotelAvailabilityList[0].NoOfBed" id="HotelAvailabilityList_0__NoOfBed" placeholder="Enter NoOfBed" class="form-control" />
+                                                            <span id="HotelAvailabilityList_(0)__NoOfBed_jserror"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Price</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="HotelAvailabilityList[0].Price" id="HotelAvailabilityList_0__Price" placeholder="Enter Hotel Proce" class="form-control" />
+                                                            <span id="HotelAvailabilityList_(0)__Price_jserror"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Hotel Room Number</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="HotelAvailabilityList[0].RoomNo" id="HotelAvailabilityList_0__RoomNo" placeholder="Enter RoomNo" class="form-control" />
+                                                            <span id="HotelAvailabilityList_(0)__RoomNo_jserror"></span>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Discount Percent</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="HotelAvailabilityList[0].DiscountPercent" id="HotelAvailabilityList_0__DiscountPercent" placeholder="Enter Discount Percent" class="form-control" />
+                                                            <span id="HotelAvailabilityList_(0)__DiscountPercent_jserror"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Total Price</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="HotelAvailabilityList[0].TotalPrice" id="HotelAvailabilityList_0__TotalPrice" placeholder="Enter Total Price" class="form-control" />
+                                                            <span id="HotelAvailabilityList_(0)__TotalPrice_jserror"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                }
+
+                            </div>
+                            <script id="Availability-items-template" type="text/x-handlebars-template">
+                                <div class="table-added entryItem">
+                                    <fieldset>
+                                        <hr>
+                                       <div style="text-align:right">
+                                               <button type="button" class="btn btn-primary btn-sm deleteAvailabilityRow"><i class='bx bxs-trash'></i></button>
+                                       </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Room Type</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" name="HotelAvailabilityList[{{count}}].RoomType" id="HotelAvailabilityList_{{count}}__RoomType" placeholder="Enter Hotel RoomType" class="form-control"/>
+                                                        <span id="HotelAvailabilityList_{{count}}__RoomType_jserror"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Number Of Guest</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" name="HotelAvailabilityList[{{count}}].NumberOfGuest" id="HotelAvailabilityList_{{count}}__NumberOfGuest" placeholder="Enter NumberOfGuest" class="form-control"/>
+                                                        <span id="HotelAvailabilityList_{{count}}__NumberOfGuest_jserror"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                             <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Number Of Bed</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" name="HotelAvailabilityList[{{count}}].NoOfBed" id="HotelAvailabilityList_{{count}}__NoOfBed" placeholder="Enter NoOfBed" class="form-control"/>
+                                                        <span id="HotelAvailabilityList_{{count}}__NoOfBed_jserror"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                              <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Price</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" name="HotelAvailabilityList[{{count}}].Price" id="HotelAvailabilityList_{{count}}__Price" placeholder="Enter Price" class="form-control"/>
+                                                        <span id="HotelAvailabilityList_{{count}}__Price_jserror"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                          
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Hotel Room Number</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" name="HotelAvailabilityList[{{count}}].RoomNo" id="HotelAvailabilityList_{{count}}__RoomNo" placeholder="Enter RoomNo" class="form-control"/>
+                                                        <span id="HotelAvailabilityList_{{count}}__RoomNo_jserror"></span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Discount Percent</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" name="HotelAvailabilityList[{{count}}].DiscountPercent" id="HotelAvailabilityList_{{count}}__DiscountPercent" placeholder="Enter Discount Percent" class="form-control"/>
+                                                        <span id="HotelAvailabilityList_{{count}}__DiscountPercent_jserror"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Total Price</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" name="HotelAvailabilityList[{{count}}].TotalPrice" id="HotelAvailabilityList_{{count}}__TotalPrice" placeholder="Enter Total Price" class="form-control"/>
+                                                        <span id="HotelAvailabilityList_{{count}}__TotalPrice_jserror"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </script>
+                            <hr />
+                            <div style="text-align:right">
+                                <a href="javascript:void(0);" class="btn addRow" style="border-radius: 50%; font-size: 20px; width: 30px; height: 40px;" id="addAvailabilityRow">
+                                    <i class="bx bx-plus-circle" style="position:absolute;margin-left:-24px;margin-top:-13px;font-size:50px;color:black"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="Surroundings-items">
+                                <h4>Hotel Property Surroundings Information</h4>
+                                <hr />
+
+                                @if (Model.HotelPropertySurroundingList.Count() > 0)
+                                {
+                                    for (int i = 0; i < Model.HotelPropertySurroundingList.Count; i++)
+                                    {
+                                        <div class="table-added entryItem">
+                                            <fieldset>
+                                                <hr>
+                                                <div style="text-align:right">
+                                                    <button type="button" class="btn btn-primary btn-sm deleteSurroundingsRow"><i class='bx bxs-trash'></i></button>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Property Type</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" name="HotelPropertySurroundingList[@i].PropertyType" id="HotelPropertySurroundingList_@(i)__PropertyType" placeholder="Enter Hotel PropertyType" class="form-control" value="@Model.HotelPropertySurroundingList[i].PropertyType" />
+                                                                <span id="HotelPropertySurroundingList_@(i)__PropertyType_jserror"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Name</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" name="HotelPropertySurroundingList[@i].Name" id="HotelPropertySurroundingList_@(i)__Name" placeholder="Enter Hotel Feature" class="form-control" value="@Model.HotelPropertySurroundingList[i].Name" />
+                                                                <span id="HotelPropertySurroundingList_@(i)__Name_jserror"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="table-added entryItem">
+                                        <fieldset>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Property Type</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="HotelPropertySurroundingList[0].PropertyType" id="HotelPropertySurroundingList_0__PropertyType" placeholder="Enter Hotel PropertyType" class="form-control" />
+                                                            <span id="HotelPropertySurroundingList_0__PropertyType_jserror"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Name</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="HotelPropertySurroundingList[0].Name" id="HotelPropertySurroundingList_0__Name" placeholder="Enter Hotel Feature" class="form-control" />
+                                                            <span id="HotelPropertySurroundingList_0__Name_jserror"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                }
+
+                            </div>
+                            <script id="Surroundings-items-template" type="text/x-handlebars-template">
+                                <div class="table-added entryItem">
+                                    <fieldset>
+                                       <hr>
+                                       <div style="text-align:right">
+                                                <button type="button" class="btn btn-primary btn-sm deleteSurroundingsRow"><i class='bx bxs-trash'></i></button>
+                                       </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Property Type</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" name="HotelPropertySurroundingList[{{count}}].PropertyType" id="HotelPropertySurroundingList_{{count}}__PropertyType" placeholder="Enter Hotel PropertyType" class="form-control"/>
+                                                        <span id="HotelPropertySurroundingList_{{count}}__PropertyType_jserror"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Name</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" name="HotelPropertySurroundingList[{{count}}].Name" id="HotelPropertySurroundingList_{{count}}__Name" placeholder="Enter Hotel Feature" class="form-control"/>
+                                                        <span id="HotelPropertySurroundingList_{{count}}__Name_jserror"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </script>
+                            <hr />
+                            <div style="text-align:right">
+                                <a href="javascript:void(0);" class="btn addSurroundingsRow" style="border-radius: 50%; font-size: 20px; width: 30px; height: 40px;" id="addSurroundingsRow">
+                                    <i class="bx bx-plus-circle" style="position:absolute;margin-left:-24px;margin-top:-13px;font-size:50px;color:black"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="Feature-items">
+                                <h4>Hotel Facilities</h4>
+                                <hr />
+                                @if (Model.HotelFacilityList.Count() > 0)
+                                {
+                                    for (int i = 0; i < Model.HotelFacilityList.Count; i++)
+                                    {
+                                        <div class="table-added entryItem">
+                                            <fieldset>
+                                                <hr>
+                                                <div style="text-align:right">
+                                                    <button type="button" class="btn btn-primary btn-sm deleteRow"><i class='bx bxs-trash'></i></button>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Facility Type</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" name="HotelFacilityList[@i].FacilityType" id="HotelFacilityList_@(i)__FacilityType" placeholder="Enter Hotel FacilityType" class="form-control" value="@Model.HotelFacilityList[i].FacilityType" />
+                                                                <span id="HotelFacilityList_@(i)__FacilityType_jserror"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Name</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" name="HotelFacilityList[@i].Name" id="HotelFacilityList_@(i)__Name" placeholder="Enter Hotel Feature" class="form-control" value="@Model.HotelFacilityList[i].Name" />
+                                                                <span id="HotelFacilityList_@(i)__Name_jserror"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Is Popular Facilities</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="checkbox" name="HotelFacilityList[@i].IsPopularFaculity" id="HotelFacilityList_@(i)__IsPopularFaculity" />
+                                                                <span id="HotelFacilityList_@(i)__IsPopularFaculity_jserror"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="table-added entryItem">
+                                        <fieldset>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Facility Type</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="HotelFacilityList[0].FacilityType" id="HotelFacilityList_0__FacilityType" placeholder="Enter Hotel FacilityType" class="form-control" />
+                                                            <span id="HotelFacilityList_0__FacilityType_jserror"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Name</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="HotelFacilityList[0].Name" id="HotelFacilityList_0__Name" placeholder="Enter Hotel Feature" class="form-control" />
+                                                            <span id="HotelFacilityList_0__Name_jserror"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Is Popular Facilities</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="checkbox" name="HotelFacilityList[0].IsPopularFaculity" id="HotelFacilityList_0__IsPopularFaculity" />
+                                                            <span id="HotelFacilityList_0__IsPopularFaculity_jserror"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                }
+
+                            </div>
+                            <script id="Feature-items-template" type="text/x-handlebars-template">
+                                           <div class="table-added entryItem">
+                                            <fieldset>
+                                                <hr>
+                                                <div style="text-align:right">
+                                                    <button type="button" class="btn btn-primary btn-sm deleteRow"><i class='bx bxs-trash'></i></button>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Facility Type</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" name="HotelFacilityList[{{count}}].FacilityType" id="HotelFacilityList_{{count}}__FacilityType" placeholder="Enter Hotel FacilityType" class="form-control"/>
+                                                                <span id="HotelFacilityList_{{count}}__FacilityType_jserror"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Name</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" name="HotelFacilityList[{{count}}].Name" id="HotelFacilityList_{{count}}__Name" placeholder="Enter Hotel Feature" class="form-control"/>
+                                                                <span id="HotelFacilityList_{{count}}__Name_jserror"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">Is Popular Facilities</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="checkbox" name="HotelFacilityList[{{count}}].IsPopularFaculity" id="HotelFacilityList_{{count}}__IsPopularFaculity" />
+                                                                <span id="HotelFacilityList_{{count}}__IsPopularFaculity_jserror"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                </div>
+                            </script>
+                            <hr />
+                            <div style="text-align:right">
+                                <a href="javascript:void(0);" class="btn addRow" style="border-radius: 50%; font-size: 20px; width: 30px; height: 40px;" id="addRow">
+                                    <i class="bx bx-plus-circle" style="position:absolute;margin-left:-24px;margin-top:-13px;font-size:50px;color:black"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row container">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary">@(string.IsNullOrEmpty(Model.HotelCode) ? "Add Hotel Details" : "Update Hotel Details") </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="~/scripts/admin/Hotel/hotelSetup.js"></script>
+    <script src="~/js/handlebars.min.js"></script>
+    <partial name="_AlertPartial" />
+    <script type="text/javascript">
+        $(function () {
+            var hotelSetup = HotelSetupManagement.hotelSetup();
+            hotelSetup.renderManage();
+        });
+    </script>
+}

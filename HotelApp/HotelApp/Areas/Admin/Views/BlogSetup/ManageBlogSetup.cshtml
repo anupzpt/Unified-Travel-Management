@@ -1,0 +1,99 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model HotelApp.Shared.Admin.Blog.BlogCommon;
+@{
+    ViewData["Title"] = "Manage Setup Page";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link href="~/admin/assets/css/customstyle.css" rel="stylesheet" />
+<style>
+    .fixed-dimensions {
+        width: 300px;
+        height: 340px;
+        object-fit: cover; /* This ensures the image covers the area while maintaining aspect ratio */
+    }
+
+</style>
+<div style="display:flex;justify-content:space-between">
+    <div>
+        <h5 class="py-3 mb-4"><span class="text-muted fw-light text-primary">Blog Setup / </span>Manage Blog Details</h5>
+    </div>
+    <div style="display:flex;justify-content:flex-end">
+        <div style="position:relative;right:10px"><button type="button" class="btn btn-default" onclick="javascript:history.go(-1);" style="background-color:gainsboro"><i class='bx bx-arrow-back'></i> Back</button></div>
+    </div>
+</div>
+<div class="form-horizontal manage-body">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">Blog Details</h4>
+            <div class="underLine"></div>
+            <hr />
+        </div>
+        <div class="panel-body">
+            <form asp-area="Admin" asp-action=@(string.IsNullOrEmpty(Model.BlogCode) ? "AddBlogSetup" : "UpdateBlogSetup") asp-controller="BlogSetup" method="post" id="manage-Blog-form" enctype="multipart/form-data">
+                <div class="col-md-12">
+                    <div class=" container row">
+                        <div class="col-md-8 form-view">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Title</label>
+                                <div class="col-sm-8">
+                                    <input type="text" asp-for="Title" class="form-control" placeholder="Enter Blog Title" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Subject</label>
+                                <div class="col-sm-8">
+                                    <input type="text" asp-for="SloganName" class="form-control" placeholder="Enter Subject" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Description</label>
+                                <div class="col-sm-12">
+
+                                    <textarea asp-for="Description" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <hr />
+                        </div>
+                        <div class="col-md-4">
+                            <div class="photo-container">
+                                <div class="image-box">
+                                    @if (string.IsNullOrEmpty(Model.BlogCode))
+                                    {
+                                        <img src="~/admin/assets/img/image/uploadImage.png" alt="profile" class="image-responsive image-curve fixed-dimensions" id="previewImg">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/ProjectImage/@Model.BlogImageView" alt="profile" class="image-responsive image-curve fixed-dimensions" id="previewImg">
+                                    }
+                                </div>
+                                <hr />
+                                <div class="div-button">
+                                    <div class="button-upload">
+                                        <input type="file" asp-for="BlogImageFile" class="file-upload" accept=".png, .jpg, .jpeg" />
+                                        <input type="hidden" asp-for="BlogImageView" />
+                                        <input type="hidden" asp-for="BlogCode" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row container">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary">@(string.IsNullOrEmpty(Model.BlogCode) ? "Add Blog Details" : "Update Blog Details") </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="~/scripts/admin/Blog/blogSetup.js"></script>
+    <partial name="_AlertPartial" />
+    <script type="text/javascript">
+        $(function () {
+            var BlogSetup = BlogSetupManagement.BlogSetup();
+            BlogSetup.renderManage();
+        });
+    </script>
+}

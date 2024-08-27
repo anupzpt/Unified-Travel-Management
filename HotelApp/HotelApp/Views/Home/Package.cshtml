@@ -1,0 +1,96 @@
+﻿<link href="~/user/css/style.css" rel="stylesheet" />
+<div class="container-fluid bg-primary position-relative p-0">
+    <nav class="navbar navbar-expand-lg navbar-dark  px-4 px-lg-5 py-3 py-lg-0">
+        <a href="" class="navbar-brand p-0">
+            <h1 class="m-0" style="color:whitesmoke"><img src="~/admin/assets/img/layouts/logo2_2cc3.png" alt="IMG" style="width: 80px; height: 80px; border-radius: 50%;"> Travela</h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="@Url.Action("Index","Home")" class="nav-item nav-link nav-linkpack">Home</a>
+                <a href="@Url.Action("Package","Home")" class="nav-item nav-link nav-linkpack">Packages</a>
+                <a href="@Url.Action("Accomodation","Home")" class="nav-item nav-link nav-linkpack">Accomodation</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu m-0">
+                        <a href="@Url.Action("Gallery","Home")" class="dropdown-item">Our Gallery</a>
+                        <a href="@Url.Action("Guide","Home")" class="dropdown-item">Travel Guides</a>
+                        <a href="@Url.Action("Blog","Home")" class="dropdown-item">Blog</a>
+                    </div>
+                </div>
+                <a href="@Url.Action("Contact","Home")" class="nav-item nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="container-fluid destination py-5">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <h5 class="section-title px-3">
+                PACKAGE WE OFFER
+            </h5>
+        </div>
+        <div class="grid-container">
+            <div class="grid-item">
+                <a href="@Url.Action("PackageList","Package",new {id="Treaking"})">
+                    <img src="~/admin/assets/img/image/pexels-karolina-2031292-3669288.jpg" alt="Trekking in Nepal">
+                    <div class="caption">
+                        Trekking in Nepal
+                        @* <div class="packages">7 packages</div> *@
+                    </div>
+                </a>
+            </div>
+            <div class="grid-item">
+                <a href="@Url.Action("PackageList","Package",new {id="WildLife"})">
+                    <img src="~/admin/assets/img/image/himalayas-ama-dablam-temple-mountain-wallpaper-preview.jpg" alt="Nepal Wildlife Tour">
+                    <div class="caption">
+                        Nepal Wildlife Tour
+                        @* <div class="packages">5 packages</div> *@
+                    </div>
+                </a>
+            </div>
+            <div class="grid-item">
+                <a href="@Url.Action("PackageList","Package",new {id="FestivalCulture"})">
+
+                    <img src="~/admin/assets/img/image/budhha-the-legend-of-majipa-lakehy.jpg" alt="Festival and Cultural Tours">
+                    <div class="caption">
+                        Festival and Cultural Tours
+                        @* <div class="packages">3 packages</div> *@
+                    </div>
+                </a>
+            </div>
+            <div class="grid-item">
+                <a href="@Url.Action("PackageList","Package",new {id="Tour"})">
+
+                    <img src="~/admin/assets/img/image/swayambhunath-kathmandu-nepal-feng-wei-photography.jpg" alt="Nepal Tour Packages">
+                    <div class="caption">
+                        Nepal Tour Packages
+                        @* <div class="packages">20 packages</div> *@
+                    </div>
+                </a>
+            </div>
+            <div class="grid-item">
+                <a href="@Url.Action("PackageList","Package",new {id="Climbing"})">
+
+                    <img src="~/admin/assets/img/image/climbing.jpg" alt="Nepal Peak Climbing">
+                    <div class="caption">
+                        Nepal Peak Climbing
+                        @* <div class="packages">8 packages</div> *@
+                    </div>
+                </a>
+
+            </div>
+            <div class="grid-item">
+                <a href="@Url.Action("PackageList","Package",new {id="MotorBikeTour"})">
+                    <img src="~/admin/assets/img/image/HD-wallpaper-nepal-to-tibet-motorcycle-tour-nepal-motorcycle-tibet-travel.jpg" alt="Moterbike Tour">
+                    <div class="caption">
+                        Nepal Moterbike Tour
+                        @* <div class="packages">8 packages</div> *@
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

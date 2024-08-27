@@ -1,0 +1,109 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model HotelApp.Shared.Admin.Driver.DriverCommon
+@{
+    ViewData["Title"] = "Manage Setup Page";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link href="~/admin/assets/css/customstyle.css" rel="stylesheet" />
+<style>
+    .fixed-dimensions {
+        width: 300px;
+        height: 340px;
+        object-fit: cover; 
+    }
+
+</style>
+<div style="display:flex;justify-content:space-between">
+    <div>
+        <h5 class="py-3 mb-4"><span class="text-muted fw-light text-primary">Driver Setup / </span>Manage Driver Details</h5>
+    </div>
+    <div style="display:flex;justify-content:flex-end">
+        <div style="position:relative;right:10px"><button type="button" class="btn btn-default" onclick="javascript:history.go(-1);" style="background-color:gainsboro"><i class='bx bx-arrow-back'></i> Back</button></div>
+    </div>
+</div>
+<div class="form-horizontal manage-body">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">Driver Details</h4>
+            <div class="underLine"></div>
+            <hr />
+        </div>
+        <div class="panel-body">
+            <form asp-area="Admin" asp-action=@(string.IsNullOrEmpty(Model.DriverCode) ? "AddDriverSetup" : "UpdateDriverSetup") asp-controller="DriverSetup" method="post" id="manage-Driver-form" enctype="multipart/form-data">
+                <div class="col-md-12">
+                    <div class=" container row">
+                        <div class="col-md-8 form-view">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Full Name</label>
+                                <div class="col-sm-8">
+                                    <input type="text" asp-for="FullName" class="form-control" placeholder="Enter Full Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Age</label>
+                                <div class="col-sm-8">
+                                    <input type="text" asp-for="Age" class="form-control" placeholder="Enter Age" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Contact No</label>
+                                <div class="col-sm-8">
+                                    <input type="text" asp-for="ContactNo" class="form-control" placeholder="Enter Contact No" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">LiscineNo</label>
+                                <div class="col-sm-8">
+                                    <input type="text" asp-for="LiscineNo" class="form-control" placeholder="Enter Liscine No" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Experience</label>
+                                <div class="col-sm-8">
+                                    <input type="text" asp-for="Experience" class="form-control" placeholder="Enter Experience (In Years)" />
+                                </div>
+                            </div>
+                            <hr />
+                        </div>
+                        <div class="col-md-4">
+                            <div class="photo-container">
+                                <div class="image-box">
+                                    @if (string.IsNullOrEmpty(Model.DriverCode))
+                                    {
+                                        <img src="~/admin/assets/img/image/uploadImage.png" alt="profile" class="image-responsive image-curve fixed-dimensions" id="previewImg">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/ProjectImage/@Model.DriverImageView" alt="profile" class="image-responsive image-curve fixed-dimensions" id="previewImg">
+                                    }
+                                </div>
+                                <div class="div-button">
+                                    <div class="button-upload">
+                                        <input type="file" asp-for="DriverImageFile" class="file-upload form-control" accept=".png, .jpg, .jpeg" />
+                                        <input type="hidden" asp-for="DriverImageView" />
+                                        <input type="hidden" asp-for="DriverCode" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row container">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary">@(string.IsNullOrEmpty(Model.DriverCode) ? "Add Driver Details" : "Update Driver Details") </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="~/scripts/admin/Driver/driverSetup.js"></script>
+    <partial name="_AlertPartial" />
+    <script type="text/javascript">
+        $(function () {
+            var driverSetup = DriverSetupManagement.driverSetup();
+            driverSetup.renderManage();
+        });
+    </script>
+}

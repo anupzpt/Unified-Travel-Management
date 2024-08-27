@@ -1,0 +1,275 @@
+﻿<link href="~/user/css/style.css" rel="stylesheet" />
+<div class="container-fluid bg-primary position-relative p-0">
+    <nav class="navbar navbar-expand-lg navbar-dark  px-4 px-lg-5 py-3 py-lg-0">
+        <a href="" class="navbar-brand p-0">
+            <h1 class="m-0" style="color:whitesmoke"><img src="~/admin/assets/img/layouts/logo2_2cc3.png" alt="IMG" style="width: 80px; height: 80px; border-radius: 50%;"> Travela</h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="@Url.Action("Index","Home")" class="nav-item nav-link nav-linkpack">Home</a>
+                <a href="@Url.Action("Package","Home")" class="nav-item nav-link nav-linkpack">Packages</a>
+                <a href="@Url.Action("Accomodation","Home")" class="nav-item nav-link nav-linkpack">Accomodation</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu m-0">
+                        <a href="@Url.Action("Gallery","Home")" class="dropdown-item">Our Gallery</a>
+                        <a href="@Url.Action("Guide","Home")" class="dropdown-item">Travel Guides</a>
+                        <a href="@Url.Action("Blog","Home")" class="dropdown-item">Blog</a>
+                    </div>
+                </div>
+                <a href="@Url.Action("Contact","Home")" class="nav-item nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="container-fluid gallery py-5 my-5">
+    <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+        <h5 class="section-title px-3">Our Gallery</h5>
+        <h1 class="mb-4">Tourism & Traveling Gallery.</h1>
+        <p class="mb-0">
+            A visual journey through the world's most captivating destinations, showcasing the beauty and diversity of our planet.
+            From vibrant cultures, breathtaking landscapes, and unforgettable experiences that await travelers. Each image tells a story.
+            Gallery not only inspires wanderlust but also highlights the shared human experience of exploration and discovery, reminding us of the wonders that lie beyond our doorstep.
+        </p>
+    </div>
+    <div class="tab-class text-center">
+
+        <div class="tab-content">
+            <div id="GalleryTab-1">
+                <div class="row g-2">
+                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
+                        <div class="gallery-item h-100">
+                            <img src="~/User/img/gallery-1.jpg" class="img-fluid w-100 h-100 rounded" alt="Image">
+                            <div class="gallery-content">
+                                <div class="gallery-info">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                        <div class="gallery-item h-100">
+                            <img src="~/User/img/gallery-2.jpg" class="img-fluid w-100 h-100 rounded" alt="Image">
+                            <div class="gallery-content">
+                                <div class="gallery-info">
+                                </div>
+                            </div>
+                            <div class="gallery-plus-icon">
+                                <a href="img/gallery-2.jpg" data-lightbox="gallery-2" class="my-auto"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
+                        <div class="gallery-item h-100">
+                            <img src="~/User/img/gallery-3.jpg" class="img-fluid w-100 h-100 rounded" alt="Image">
+                            <div class="gallery-content">
+                                <div class="gallery-info">
+                                </div>
+                            </div>
+                            <div class="gallery-plus-icon">
+                                <a href="img/gallery-3.jpg" data-lightbox="gallery-3" class="my-auto"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                        <div class="gallery-item h-100">
+                            <img src="~/User/img/gallery-4.jpg" class="img-fluid w-100 h-100 rounded" alt="Image">
+                            <div class="gallery-content">
+                                <div class="gallery-info">
+                                </div>
+                            </div>
+                            <div class="gallery-plus-icon">
+                                <a href="img/gallery-4.jpg" data-lightbox="gallery-4" class="my-auto"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
+                        <div class="gallery-item h-100">
+                            <img src="~/User/img/gallery-5.jpg" class="img-fluid w-100 h-100 rounded" alt="Image">
+                            <div class="gallery-content">
+                                <div class="gallery-info">
+                                </div>
+                            </div>
+                            <div class="gallery-plus-icon">
+                                <a href="img/gallery-5.jpg" data-lightbox="gallery-5" class="my-auto"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
+                        <div class="gallery-item h-100">
+                            <img src="~/User/img/gallery-6.jpg" class="img-fluid w-100 h-100 rounded" alt="Image">
+                            <div class="gallery-content">
+                                <div class="gallery-info">
+                                </div>
+                            </div>
+                            <div class="gallery-plus-icon">
+                                <a href="img/gallery-6.jpg" data-lightbox="gallery-6" class="my-auto"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                        <div class="gallery-item h-100">
+                            <img src="~/User/img/gallery-7.jpg" class="img-fluid w-100 h-100 rounded" alt="Image">
+                            <div class="gallery-content">
+                                <div class="gallery-info">
+                                </div>
+                            </div>
+                            <div class="gallery-plus-icon">
+                                <a href="img/gallery-7.jpg" data-lightbox="gallery-7" class="my-auto"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3 col-xl-2">
+                        <div class="gallery-item h-100">
+                            <img src="~/User/img/gallery-8.jpg" class="img-fluid w-100 h-100 rounded" alt="Image">
+                            <div class="gallery-content">
+                                <div class="gallery-info">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                        <div class="gallery-item h-100">
+                            <img src="~/User/img/gallery-9.jpg" class="img-fluid w-100 h-100 rounded" alt="Image">
+                            <div class="gallery-content">
+                                <div class="gallery-info">
+                                </div>
+                            </div>
+                            <div class="gallery-plus-icon">
+                                <a href="img/gallery-9.jpg" data-lightbox="gallery-9" class="my-auto"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3 col-xl-2">
+                        <div class="gallery-item h-100">
+                            <img src="~/User/img/gallery-10.jpg" class="img-fluid w-100 h-100 rounded" alt="Image">
+                            <div class="gallery-content">
+                                <div class="gallery-info">
+                                </div>
+                            </div>
+                            <div class="gallery-plus-icon">
+                                <a href="img/gallery-10.jpg" data-lightbox="gallery-10" class="my-auto"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="GalleryTab-2" class="tab-pane fade show p-0">
+                <div class="row g-2">
+                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                        <div class="gallery-item h-100">
+                            <img src="~/User/img/gallery-2.jpg" class="img-fluid w-100 h-100 rounded" alt="Image">
+                            <div class="gallery-content">
+                                <div class="gallery-info">
+                                </div>
+                            </div>
+                            <div class="gallery-plus-icon">
+                                <a href="img/gallery-2.jpg" data-lightbox="gallery-2" class="my-auto"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
+                        <div class="gallery-item h-100">
+                            <img src="~/User/img/gallery-3.jpg" class="img-fluid w-100 h-100 rounded" alt="Image">
+                            <div class="gallery-content">
+                                <div class="gallery-info">
+                                </div>
+                            </div>
+                            <div class="gallery-plus-icon">
+                                <a href="img/gallery-3.jpg" data-lightbox="gallery-3" class="my-auto"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="GalleryTab-3" class="tab-pane fade show p-0">
+                <div class="row g-2">
+                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                        <div class="gallery-item h-100">
+                            <img src="~/User/img/gallery-2.jpg" class="img-fluid w-100 h-100 rounded" alt="Image">
+                            <div class="gallery-content">
+                                <div class="gallery-info">
+                                </div>
+                            </div>
+                            <div class="gallery-plus-icon">
+                                <a href="img/gallery-2.jpg" data-lightbox="gallery-2" class="my-auto"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
+                        <div class="gallery-item h-100">
+                            <img src="~/User/img/gallery-3.jpg" class="img-fluid w-100 h-100 rounded" alt="Image">
+                            <div class="gallery-content">
+                                <div class="gallery-info">
+                                </div>
+                            </div>
+                            <div class="gallery-plus-icon">
+                                <a href="img/gallery-3.jpg" data-lightbox="gallery-3" class="my-auto"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="GalleryTab-4" class="tab-pane fade show p-0">
+                <div class="row g-2">
+                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                        <div class="gallery-item h-100">
+                            <img src="~/User/img/gallery-2.jpg" class="img-fluid w-100 h-100 rounded" alt="Image">
+                            <div class="gallery-content">
+                                <div class="gallery-info">
+                                </div>
+                            </div>
+                            <div class="gallery-plus-icon">
+                                <a href="img/gallery-2.jpg" data-lightbox="gallery-2" class="my-auto"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
+                        <div class="gallery-item h-100">
+                            <img src="~/User/img/gallery-3.jpg" class="img-fluid w-100 h-100 rounded" alt="Image">
+                            <div class="gallery-content">
+                                <div class="gallery-info">
+                                </div>
+                            </div>
+                            <div class="gallery-plus-icon">
+                                <a href="img/gallery-3.jpg" data-lightbox="gallery-3" class="my-auto"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="GalleryTab-5" class="tab-pane fade show p-0">
+                <div class="row g-2">
+                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                        <div class="gallery-item h-100">
+                            <img src="~/User/img/gallery-2.jpg" class="img-fluid w-100 h-100 rounded" alt="Image">
+                            <div class="gallery-content">
+                                <div class="gallery-info">
+                                </div>
+                            </div>
+                            <div class="gallery-plus-icon">
+                                <a href="img/gallery-2.jpg" data-lightbox="gallery-2" class="my-auto"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
+                        <div class="gallery-item h-100">
+                            <img src="~/User/img/gallery-3.jpg" class="img-fluid w-100 h-100 rounded" alt="Image">
+                            <div class="gallery-content">
+                                <div class="gallery-info">
+                                </div>
+                            </div>
+                            <div class="gallery-plus-icon">
+                                <a href="img/gallery-3.jpg" data-lightbox="gallery-3" class="my-auto"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

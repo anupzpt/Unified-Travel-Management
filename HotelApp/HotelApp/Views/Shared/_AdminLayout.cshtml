@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+
+<html lang="en"
+      class="light-style layout-menu-fixed"
+      dir="ltr"
+      data-theme="theme-default"
+      data-assets-path="~/Admin/assets/"
+      data-template="vertical-menu-template-free">
+<head>
+    <meta charset="utf-8" />
+   @*  <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" /> *@
+
+    <title>Unified Travel Experience System</title>
+
+    <meta name="description" content="" />
+    <link rel="icon" href="~/admin/assets/img/layouts/logo2_2cc3.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="~/Admin/assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="~/Admin/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="~/Admin/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="~/Admin/assets/css/demo.css" />
+    <link rel="stylesheet" href="~/Admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+    <link rel="stylesheet" href="~/Admin/assets/vendor/libs/apex-charts/apex-charts.css" />
+
+    <link href="~/Admin/ReportComponent/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/admin/assets/toastr/toastr.css" rel="stylesheet" />
+    <link href="~/admin/assets/toastr/toastr.min.css" rel="stylesheet" />
+
+    <script src="~/Admin/assets/vendor/js/helpers.js"></script>
+
+    <script src="~/Admin/assets/js/config.js"></script>
+</head>
+
+<body>
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            @{
+                Html.RenderPartial("~/Views/Shared/partialView/_sidebar.cshtml");
+            }
+            <div class="layout-page">
+                @{
+                    Html.RenderPartial("~/Views/Shared/partialView/_navbar.cshtml");
+                }
+                <div class="content-wrapper">
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        @RenderBody()
+                    </div>
+                    @{
+                        Html.RenderPartial("~/Views/Shared/partialView/_footer.cshtml");
+                    }
+                    <div class="content-backdrop fade"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+
+
+    <script src="~/Admin/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="~/Admin/assets/vendor/libs/popper/popper.js"></script>
+    <script src="~/Admin/assets/vendor/js/bootstrap.js"></script>
+    <script src="~/Admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+    <script src="~/Admin/assets/vendor/js/menu.js"></script>
+    <script src="~/Admin/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+    <script src="~/Admin/assets/js/main.js"></script>
+
+    <script src="~/Admin/assets/js/dashboards-analytics.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <script src="~/Admin/ReportComponent/js/jquery.dataTables.min.js"></script>
+    <script src="~/admin/assets/toastr/toastr.js"></script>
+    <script src="~/admin/assets/toastr/toastr.min.js"></script>
+    <a href="~/admin/assets/toastr/toastr.js.map">~/admin/assets/toastr/toastr.js.map</a>
+    @RenderSection("scripts", false);
+    @RenderSection("scriptsPartial", false);
+</body>
+</html>

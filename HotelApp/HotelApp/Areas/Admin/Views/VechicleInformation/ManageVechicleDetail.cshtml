@@ -1,0 +1,180 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model HotelApp.Shared.Admin.Vechicle.VechicleCommon;
+@{
+    ViewData["Title"] = "Manage Vechicle Setup Page";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link href="~/admin/assets/css/customstyle.css" rel="stylesheet" />
+<style>
+    .fixed-dimensions {
+        width: 300px;
+        height: 340px;
+        object-fit: cover; /* This ensures the image covers the area while maintaining aspect ratio */
+    }
+
+</style>
+<div style="display:flex;justify-content:space-between">
+    <div>
+        <h5 class="py-3 mb-4"><span class="text-muted fw-light text-primary">Banner Setup / </span>Manage Banner Details</h5>
+    </div>
+    <div style="display:flex;justify-content:flex-end">
+        <div style="position:relative;right:10px"><button type="button" class="btn btn-default" onclick="javascript:history.go(-1);" style="background-color:gainsboro"><i class='bx bx-arrow-back'></i> Back</button></div>
+    </div>
+</div>
+<div class="form-horizontal manage-body">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">Banner Details</h4>
+            <div class="underLine"></div>
+            <hr />
+        </div>
+        <div class="panel-body">
+            <form asp-area="Admin" asp-action=@(string.IsNullOrEmpty(Model.VechicleCode) ? "AddVechicleDetail" : "UpdateVechicleDetail") asp-controller="VechicleInformation" method="post" id="manage-banner-form" enctype="multipart/form-data">
+                <div class="col-md-12">
+                    <div class=" container row">
+                        <div class="col-md-8 form-view">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Vechicle Type</label>
+                                <div class="col-sm-8">
+                                    <select asp-for="VechicleType" asp-items="@Model.VechicleTypeList" class="form-control">
+                                        <option value="">Select Vechicle Type</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <h3>Specification</h3>
+                            <hr />
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Name</label>
+                                <div class="col-sm-8">
+                                    <input type="text" asp-for="Name" class="form-control" placeholder="Enter Vechicle Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Brand</label>
+                                <div class="col-sm-8">
+                                    <input type="text" asp-for="Brand" class="form-control" placeholder="Enter Vechicle Brand" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Model</label>
+                                <div class="col-sm-8">
+                                    <input type="text" asp-for="Model" class="form-control" placeholder="Enter Vechicle Model" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Capacity</label>
+                                <div class="col-sm-8">
+                                    <input type="text" asp-for="Capacity" class="form-control" placeholder="Enter Vechicle Capacity" />
+                                </div>
+                            </div>
+                            <h3>Car Detail</h3>
+                            <hr />
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Registration No</label>
+                                <div class="col-sm-8">
+                                    <input type="text" asp-for="RegistrationNo" class="form-control" placeholder="Enter Ex.(बा XX च XXXX)" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <table class="table table-bordered table-condensed table-add">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="1"> <h3>Feature</h3> </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center">Vechicle Special Feature</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="Feature-items">
+                                        @if (Model.VechicleFeatureDetails.Count > 0)
+                                        {
+                                            for (int i = 0; i < Model.VechicleFeatureDetails.Count; i++)
+                                            {
+                                                <tr class="VechicleFeature entryItem">
+                                                    <td>
+                                                        <input type="text" name="VechicleFeatureDetails[@i].VechicleFeature" id="VechicleFeatureDetails_@(i)__VechicleFeature" placeholder="Enter Vechicle Feature" class="form-control" value="@Model.VechicleFeatureDetails[i].VechicleFeature" />
+                                                        <span id="VechicleFeatureDetails_(@i)__VechicleFeature_jserror"></span>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-sm btn-outline btn-danger btn-round deleteRow"><i class='bx bx-x-circle' style="font-size:30px"></i></button>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr class="VechicleFeature entryItem">
+                                                <td>
+                                                    <input type="text" name="VechicleFeatureDetails[0].VechicleFeature" id="VechicleFeatureDetails_0__VechicleFeature" placeholder="Enter Vechicle Feature" class="form-control"/>
+                                                    <span id="VechicleFeatureDetails_0__VechicleFeature_jserror"></span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <div style="text-align:right">
+                                    <a href="javascript:void(0);" class="btn btn-warning addRow" style="border-radius: 50%; font-size: 20px; width: 30px; height: 40px;" id="addRow">
+                                        <i class="bx bx-plus-circle" style="position:absolute;margin-left:-24px;margin-top:-13px;font-size:50px;"></i>
+                                    </a>
+                                </div>
+                                <script id="Feature-items-template" type="text/x-handlebars-template">
+                                    @{
+                                       <tr class="LapseRevival entryItem">
+                                           <td>
+                                                <input type="text" name="VechicleFeatureDetails[{{count}}].VechicleFeature" class="form-control" placeholder="Select Vechicle Feature" />
+                                                <span class="VechicleFeatureDetails_{{count}}__VechicleFeature_jserror"></span>
+                                           </td>
+                                           <td>
+                                                <button type="button" class="btn btn-sm btn-outline btn-danger btn-round deleteRow"><i class='bx bx-x-circle' style="font-size:30px"></i></button>
+                                           </td>
+                                       </tr>
+                                    }
+                                </script>
+                            </div>
+
+                        </div>
+                        <div class="col-md-4">
+                            <div class="photo-container">
+                                <div class="image-box">
+                                    @if (string.IsNullOrEmpty(Model.VechicleCode))
+                                    {
+                                        <img src="~/admin/assets/img/image/uploadImage.png" alt="profile" class="image-responsive image-curve fixed-dimensions" id="previewImg">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/ProjectImage/@Model.VechicleImageView" alt="profile" class="image-responsive image-curve fixed-dimensions" id="previewImg">
+                                    }
+                                </div>
+                                <hr />
+                                <div class="div-button">
+                                    <div class="button-upload">
+                                        <input type="file" asp-for="VechicleImageFile" class="file-upload" accept=".png, .jpg, .jpeg" />
+                                        <input type="hidden" asp-for="VechicleImageView" />
+                                        <input type="hidden" asp-for="VechicleCode" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row container">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary">@(string.IsNullOrEmpty(Model.VechicleCode) ? "Add Vechicle Details" : "Update Vechicle Details") </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="~/scripts/Admin/Vechicle/vechicleSetup.js"></script>
+    <script src="~/js/handlebars.min.js"></script>
+    <partial name="_AlertPartial" />
+    <script type="text/javascript">
+        $(function () {
+            var vechicleSetup = VechicleSetupManagement.vechicleSetup();
+            vechicleSetup.renderManage();
+        });
+    </script>
+}

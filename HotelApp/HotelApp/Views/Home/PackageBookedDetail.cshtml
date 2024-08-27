@@ -1,0 +1,157 @@
+﻿@model HotelApp.Shared.Admin.Package.PackageCommon
+@{
+    Layout = null;
+    int count = 1;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unified Travel Experience System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" href="~/admin/assets/img/layouts/logo2_2cc3.png" type="image/png">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .package-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .package-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #13357b;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+            .package-header img {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+            }
+
+        .package-details {
+            margin-bottom: 20px;
+        }
+
+            .package-details p {
+                font-size: 18px;
+                color: #555;
+                margin: 5px 0;
+            }
+
+        .itinerary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+            .itinerary-table th, .itinerary-table td {
+                border: 1px solid #ddd;
+                padding: 12px;
+                text-align: center;
+            }
+
+            .itinerary-table th {
+                background-color: #13357b;
+                color: white;
+            }
+
+            .itinerary-table td {
+                background-color: #f9f9f9;
+            }
+
+        .total-price {
+            font-size: 22px;
+            color: #13357b;
+            text-align: right;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="container-fluid  position-relative p-0" style="background-color:#13357b">
+        <nav class="navbar navbar-expand-lg navbar-dark  px-4 px-lg-5 py-3 py-lg-0">
+            <a href="#" class="navbar-brand p-0">
+                <h1 class="m-0" style="color:whitesmoke; margin-right: 20px;">
+                    <img src="~/admin/assets/img/layouts/logo2_2cc3.png" alt="IMG" style="width: 80px; height: 80px; border-radius: 50%;"> Travela
+                </h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+
+        </nav>
+    </div>
+
+    <!-- Package Details Section -->
+    <div class="package-container">
+        <div class="package-header">
+            <div>
+                <h2>Package Booking Confirmation</h2>
+                <p>Date: <strong>@Model.CreatedDate</strong></p>
+                <p>Booking ID: <strong>@Model.PackageCode</strong></p>
+            </div>
+            <div>
+                <img src="~/admin/assets/img/layouts/logo2_2cc3.png" alt="IMG">
+            </div>
+        </div>
+
+        <div class="package-details">
+            <p><strong>Package Name:</strong>@Model.PackageName</p>
+            <p><strong>Duration:</strong>@Model.Duration</p>
+        </div>
+
+        <!-- Itinerary Table -->
+        <table class="itinerary-table">
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Activity</th>
+                    <th>Location</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.PackageItineraries)
+                {
+                    <tr>
+                        <td>@count</td>
+                        <td>@item.Title</td>
+                        <td>@item.Accomodation</td>
+                        <td>@item.Description </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <!-- Total Price -->
+        <div class="total-price">
+            Total Price: RS @Model.PackageAverageCost
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
